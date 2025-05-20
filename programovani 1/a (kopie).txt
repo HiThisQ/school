@@ -1,0 +1,9 @@
+Toto je        prvni    
+        veta     .  Toto
+    je
+
+    
+druha veta    .A tohle
+                           je  
+treti veta
+   .
