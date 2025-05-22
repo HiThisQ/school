@@ -127,7 +127,7 @@ def prvocislo(n):
       return False
   return True
 ```
-#### nebo 
+nebo 
 ```python
 def prvocislo(n):
   if n % 2 == 0: 
@@ -160,6 +160,64 @@ def eratosth(n):
   return prvocisla
 ```
 časová složitost je O($\frac{N}{2}$ + $\frac{N}{3}$ + $\frac{N}{5}$ + ...) = O(N log(log N))
+
+#### Dlouhá čísla 
+
+počítání s čísly s desítkami nebo stovkami cifer
+pyzhon to umí sám
+
+reprezentace
+- vytvoříme seznam cifer
+- použijeme seznam čísel nikoli znaků
+- pořadí cifer zvolíme odpředu nebo odzadu
+
+operace
+- po cifrách sčítání, odčítání, násobení, dělení
+- počítání modulo 10
+
+desetinné číslo, ukládáme pozici desetinné čárky
+- speciální hodnota uložená v seznamu (nešikovné)
+- proměnná s indexem nulového řádu
+- použít dvě pole (celá a desetinná část)
+
+Příklad
+
+Součet dvou kladných celých čísel s mnoha ciframi
+Vstup: a,b jsou seznamy cifer sčítaných čísel, a[0] = cifra v řádu jednotek
+Výstup: c je výsledný seznam cifer součtu čísel a + b
+
+- sčítání s přenosem v rozsahu cifer kratšího čísla
+- ošetřit přečnívající část delšího čísla
+- přidat případný poslední nenulový přenos
+```python
+if len(a) < len(b)
+  a, b = b, a
+
+prenos = 0
+c = []
+for i in range(len(b)):
+  x = a[i] + b[i] + prenos
+  c.append(x%10)
+  prenos = x // 10
+
+for i in range(len(b), len(a)):
+  x = a[i] + prenos
+  c.append(x%10)
+    prenos = x // 10
+
+if prenos > 0:
+  c.append(prenos)
+```
+
+#### Vyhodnocení polynomu v bodě 
+
+a(x) = a<inf>n</inf>x<sup>n</sup> + a<inf>n - 1</inf>x<sup>n - 1</sup> ... + a<inf>1</inf>x + a<inf>0</inf>
+  - n stupeň polynomu
+  - a<inf>0</inf>, ...,a<inf>n</inf> koeficienty (reálné konstanty)
+  - x proměnná, dosazujeme různé hodnoty
+    
+
+
       
 
 
