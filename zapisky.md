@@ -36,11 +36,9 @@ print(x)
 
 Efektivita algoritmu:
 
-časová 
-- rychlost výpočtu programu
+časová - rychlost výpočtu programu
 
-prostorová(paměťová)
-- paměť potřebná na uložení dat při výpočtu programu
+prostorová(paměťová) - paměť potřebná na uložení dat při výpočtu programu
 
 optimalizujeme zpravidla jen jedno, protože obě kritéria mohou mířit proti sobě
 "výměna času za paměť"
