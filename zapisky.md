@@ -281,10 +281,12 @@ print(soucin(a,b))
 
 převod z dvojkové soustavy na číselnou hodnotu přes Hornerovo schéma
 
-110010 = 1.25 + 1.24 + 0.23 + 0.22 + 1.21 + 0.20 =
-= ((((1.2 + 1).2 + 0).2 + 0).2 + 1).2 + 0 = 50
+**110010** = **1**.2<sup>5</sup> + **1**.2<sup>4</sup> + **0**.2<sup>3</sup> + **0**.2<sup>2</sup> + **1**.2<sup>1</sup> + **0**.2<sup>0</sup> =
+= ((((**1**.2 + **1**).2 + **0**).2 + **0**).2 + **1**).2 + **0** = 50
 
-<span style="color:red">Červený text</span>
+převod z šestnáctkové soustavy na číselnou hodnotu
+
+A1F = **A**.16<sup>2</sup> + **1**.16<sup>1</sup> + **F**.16<sup>0</sup> = **10**.16<sup>2</sup> + **1**.16<sup>1</sup> + **15**.16<sup>0</sup> = (**10**.16 + **1**)16 + **15** = 2591
 
 
 
