@@ -212,9 +212,9 @@ if prenos > 0:
 #### Vyhodnocení polynomu v bodě 
 
 a(x) = a<sub>n</sub>x<sup>n</sup> + a<sub>n-1</sub>x<sup>n-1</sup> ... + a<sub>1</sub>x + a<sub>0</sub>
-  - n stupeň polynomu
-  - a<sub>0</sub>, ...,a<sub>n</sub> koeficienty (reálné konstanty)
-  - x proměnná, dosazujeme různé hodnoty
+n stupeň polynomu
+a<sub>0</sub>, ...,a<sub>n</sub> koeficienty (reálné konstanty)
+x proměnná, dosazujeme různé hodnoty
 
 Přímý výpočet podle předpisu 
 
