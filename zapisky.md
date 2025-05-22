@@ -1,6 +1,6 @@
 # Zkouška
 
-## 1. přednáška, časová složitost
+## Přednáška 1, časová složitost
 
 ### Algoritmus
 
@@ -17,7 +17,7 @@ Typické vlastnosti:
 - jednoznačnost
 - determinismus
 
-Největší společný dělitel:
+### Největší společný dělitel:
 
 NSD(x,y), od 1 do min(x,y)
 - zkoušet od min(x,y) dolů do nalezení prvního společného dělitele
@@ -34,7 +34,7 @@ while y > 0:
 print(x)
 ```
 
-Efektivita algoritmu:
+### Efektivita algoritmu:
 
 časová - rychlost výpočtu programu
 
@@ -43,12 +43,12 @@ prostorová(paměťová) - paměť potřebná na uložení dat při výpočtu pr
 optimalizujeme zpravidla jen jedno, protože obě kritéria mohou mířit proti sobě
 "výměna času za paměť"
 
-Funkce:
+### Funkce:
 
 počet vykonaných operací v závislosti na velikosti vstupních dat
 funkce časové i prostorové složitosti většinou rostoucí
 
-Asymptotická časová složitost:
+### Asymptotická časová složitost:
 
 Symbol velké O, odhad zhora
 f, g: N → R
@@ -69,9 +69,9 @@ Typické třídy asymptotické složitosti jsou
 - O(N!)
 
 polynomiálně omezený čas zvládnutelný i pro velká n, exponenciální časově nezvládnutelný
-## 2. přednáška, základní algoritmy
+## Přednáška 2, základní algoritmy
 
-Složitost algoritmu v různých příkladech:
+### Složitost algoritmu v různých příkladech:
 
 Pro každá vstupní data velikosti N nemusí trvat výpočet stejně dlouho
 Časová složitost algoritmu v
@@ -81,7 +81,7 @@ Pro každá vstupní data velikosti N nemusí trvat výpočet stejně dlouho
 nejčastěji se používá časová složitost v nejhorším případě
 v průměrném případě se dobře charakterizuje kvalita algoritmu, ale je obtížně oddůvoditelná
 
-Složitost problému:
+### Složitost problému:
 
 - složitost nejlepšího algoritmu (z hlediska časové složitosti),
 kterým lze řešit daný problém
@@ -98,9 +98,9 @@ Nalézt maximum z N čísel
 - existuje algoritmus v čase O(N)
 - nemůže existovat algoritmus s lepší časovou obtížností, protože musíme projít všech N čísel
 
-Základní algoritmy s čísly:
+### Základní algoritmy s čísly:
 
-Rozklad čísla na cifry
+#### Rozklad čísla na cifry
 ```python
 def ciferny_soucet(x):
 y = 0
@@ -109,7 +109,7 @@ while x != 0:
   x //= 10
 return y
 ```
-Test prvočíselnosti 
+#### Test prvočíselnosti 
 
 - zkusit všechny dělitele od 2 do N-1, cca O(N)
 - zkusit všechny dělitele od 2 do $\frac{N}{2}$, cca O(N) ale lepší
@@ -140,7 +140,7 @@ def prvocislo(n):
   return True
 ```
 
-Eratosthenovo síto 
+#### Eratosthenovo síto 
 
 Určete všechna prvočísla od 2 do N
 
