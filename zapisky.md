@@ -1,6 +1,6 @@
 # Zkouška
 
-## Přednáška 1, časová složitost
+## Přednáška 1  Časová složitost
 
 ### Algoritmus
 
@@ -69,7 +69,7 @@ Typické třídy asymptotické složitosti jsou
 - O(N!)
 
 polynomiálně omezený čas zvládnutelný i pro velká n, exponenciální časově nezvládnutelný
-## Přednáška 2, základní algoritmy
+## Přednáška 2  Základní algoritmy
 
 ### Složitost algoritmu v různých příkladech:
 
