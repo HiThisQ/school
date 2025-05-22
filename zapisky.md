@@ -3,6 +3,7 @@
 ## 1. přednáška
 
 Algoritmus:
+
 intuitivní pojem, není pro něj specifikcká definice
 možnou definicí by mohlo být
 - Konečná posloupnost elementárních příkazů, jejichž provádění
@@ -17,6 +18,7 @@ Typické vlastnosti:
 - determinismus
 
 Největší společný dělitel:
+
 NSD(x,y), od 1 do min(x,y)
 - zkoušet od min(x,y) dolů do nalezení prvního společného dělitele
 - nalézt prvočíselné rozklady x,y, maximální společná část je pak NSD(x,y
@@ -33,6 +35,7 @@ print(x)
 ```
 
 Efektivita algoritmu:
+
 časová 
   rychlost výpočtu programu
 prostorová(paměťová)
@@ -42,9 +45,12 @@ optimalizujeme zpravidla jen jedno, protože obě kritéria mohou mířit proti 
 "výměna času za paměť"
 
 Funkce:
+
 počet vykonaných operací v závislosti na velikosti vstupních dat
 funkce časové i prostorové složitosti většinou rostoucí
 
 Asymptotická časová složitost:
+
+
 
   
