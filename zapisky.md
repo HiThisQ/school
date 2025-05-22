@@ -127,7 +127,7 @@ def prvocislo(n):
       return False
   return True
 ```
-nebo 
+#### nebo 
 ```python
 def prvocislo(n):
   if n % 2 == 0: 
