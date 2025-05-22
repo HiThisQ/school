@@ -212,12 +212,9 @@ if prenos > 0:
 #### Vyhodnocení polynomu v bodě 
 
 a(x) = a<sub>n</sub>x<sup>n</sup> + a<sub>n-1</sub>x<sup>n-1</sup> ... + a<sub>1</sub>x + a<sub>0</sub>
-
-n stupeň polynomu
-
-a<sub>0</sub>, ...,a<sub>n</sub> koeficienty (reálné konstanty)
-
-x proměnná, dosazujeme různé hodnoty
+- n stupeň polynomu
+- a<sub>0</sub>, ...,a<sub>n</sub> koeficienty (reálné konstanty)
+- x proměnná, dosazujeme různé hodnoty
 
 Přímý výpočet podle předpisu 
 
@@ -231,9 +228,60 @@ a(x) = (...((a<sub>n</sub>x + a<sub>n-1</sub>)x + a<sub>n-2</sub>)x + ... + a<su
   - počet násobení: n
   - počet sčítání: n
   - časová složitost: Θ(n)
-    
-zkouska /n
-ano
+```python
+def horner(a, x):
+# a: seznam s koeficienty polynomu a[i] * x^i, x: bod z Df, vrátí hodnotu v bodě x
+  h = 0
+  for i in range(len(a)-1, -1, -1):
+    h = h * x + a[i]
+  return h
+```
+Příklady použití jsou vstup čísla po znacích nebo konverze číselného str na int
+
+#### Operace s polynomy 
+
+a(x) = a<sub>n</sub>x<sup>n</sup> + a<sub>n-1</sub>x<sup>n-1</sup> ... + a<sub>1</sub>x + a<sub>0</sub>
+
+b = b<sub>m</sub>x<sup>m</sup> + b<sub>m-1</sub>x<sup>m-1</sup> ... + b<sub>1</sub>x + b<sub>0</sub>
+
+součet
+```python
+a = [2, -5, 0, 4, 6]     # 6x^4 + 4x^3 - 5x + 2
+b = [11, 0, -2]          # -2^2 + 11
+
+def soucet(a, b):
+  c = []
+  if len(a) < len(b)
+    a, b = b,a
+  for i in range(leb(b)):
+    c.append(a[i]+b[i])
+  for i in range(len(b), len(a)):
+    c.append(a[i])
+  while len(c) > 1 and c[-1] == 0:
+    del[-1]
+  return c
+
+print(soucet(a,b))
+```
+součin
+```python
+a = [2, -5, 0, 4, 6]     # 6x^4 + 4x^3 - 5x + 2
+b = [11, 0, -2]          # -2^2 + 11
+
+def soucin(a, b):
+  c = [0] * (len(a) + len(b) - 1)
+  for i in range(len(a)):
+    for j in range(len(b)):
+      c[i+j] += a[i] * b[j]
+  return c
+
+print(soucin(a,b))
+```
+#### Číselné soustavy 
+
+
+
+
 
       
 
