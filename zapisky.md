@@ -356,6 +356,8 @@ def mocnina2(x, n):
     n //= 2
   return v
 ```
+## Přednáška 3, Vyhledávání v seznamu
+
 
   
   
