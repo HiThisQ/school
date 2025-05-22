@@ -279,6 +279,12 @@ print(soucin(a,b))
 ```
 #### Číselné soustavy 
 
+převod z dvojkové soustavy na číselnou hodnotu přes Hornerovo schéma
+
+110010 = 1.25 + 1.24 + 0.23 + 0.22 + 1.21 + 0.20 =
+= ((((1.2 + 1).2 + 0).2 + 0).2 + 1).2 + 0 = 50
+
+<span style="color:red">Červený text</span>
 
 
 
