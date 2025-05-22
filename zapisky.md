@@ -343,11 +343,9 @@ def mocnina1(x, n):
     v *= x
   return v
 ```
-postupně počítáme hodnoty x, x<sup>2</sup>, x<sup>4</sup>... a vhodne z nich nasobime
+postupně počítáme hodnoty x, x<sup>2</sup>, x<sup>4</sup>... a vhodně z nich vynásobíme
 
-mocninu muzeme rozlozit na definitivni rozklad mocnin dvojky a jsou to ty mocniny dvojky, kde je jednička v binárním zápisu čísla n, Θ(log N)
-
-
+mocninu můžeme rozložit na definitivní rozklad mocnin dvojky, a jsou to ty mocniny dvojky, kde je jednička v binárním zápisu čísla n, Θ(log N)
 ```python
 def mocnina2(x, n):
   v = 1
