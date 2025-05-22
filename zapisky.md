@@ -33,3 +33,22 @@ while y > 0:
   y = z
 print(x)
 ```
+
+Efektivita algoritmu:
+
+časová 
+- rychlost výpočtu programu
+prostorová(paměťová)
+- paměť potřebná na uložení dat při výpočtu programu
+
+optimalizujeme zpravidla jen jedno, protože obě kritéria mohou mířit proti sobě
+"výměna času za paměť"
+
+Funkce:
+
+počet vykonaných operací v závislosti na velikosti vstupních dat
+funkce časové i prostorové složitosti většinou rostoucí
+
+Asymptotická časová složitost 
+
+  
