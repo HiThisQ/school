@@ -73,7 +73,7 @@ polynomiálně omezený čas zvládnutelný i pro velká n, exponenciální čas
 
 Složitost algoritmu v různých příkladech:
 
-Pro každá vstupní data velikosti \n nemusí trvat výpočet stejně dlouho
+Pro každá vstupní data velikosti N nemusí trvat výpočet stejně dlouho
 Časová složitost algoritmu v
 - nejhorším případě: maximální počet vykonaných operací
 - nejlepším případě: minimální počet vykonaných operací
@@ -117,6 +117,49 @@ Test prvočíselnosti
   - v nejhoším O($\sqrt{N}$)
   - v nejlepším 1
 - zkusit 2 a poté liché dělitele lichých čísel
+```python
+from math import sqrt
+
+def prvocislo(n):
+  for d in range(2, int(sqrt(n) + 1):
+    if n % d == 0:
+      return False
+  return True
+```
+nebo 
+```python
+def prvocislo(n):
+  if n % 2 == 0: 
+    return n == 2  #jediné sudé prvočíslo
+  d = 3
+  while d * d <= n:
+      if n % d == 0:
+        return False
+      d += 2
+  return True
+```
+
+Eratosthenovo síto 
+
+Určete všechna prvočísla od 2 do N
+
+princip - v řadě od 2 do N postupně škrtáme všechny násobky jednotlivých prvočísel, zbývající čísla pak jsou hledaná prvočísla 
+```python
+def eratosth(n):
+  sito = [False, False] + [True] * (n-1)
+  prvocisla = []
+
+  for i in range(n + 1):
+    if sito[i]:
+      prvocisla.append(i)
+      j = i * i         #staci zacit s nasobky od kvadratu
+      while j <= n:
+        sito[j] = False
+        j = j + i
+  return prvocisla
+```
+časová složitost je O($\frac{N}{2}$ + $\frac{N}{3}$ + $\frac{N}{5}$ + ...) = O(N log(log N))
+      
 
 
 
