@@ -2,7 +2,7 @@
 
 ## 1. přednáška, časová složitost
 
-###Algoritmus:
+### Algoritmus
 
 intuitivní pojem, není pro něj specifikcká definice
 možnou definicí by mohlo být
