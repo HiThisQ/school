@@ -54,9 +54,9 @@ Symbol velké O, odhad zhora
 f, g: N → R
 f ∈ O(g) <=> E c > 0 V n0 > 0 V n ≥ n0 : 0 ≤ f(n) ≤ c.g(n)
 
-Opačný odhad zdola: f ∈ Omega(g) 0 ≤ c.g(n) ≤ f(n)
+Opačný odhad zdola: f ∈ Ω(g) 0 ≤ c.g(n) ≤ f(n)
 
-Přesný (těsný) odhad: f ∈ Phi(g) <=> f ∈ O(g) a f ∈ Omega(g)
+Přesný (těsný) odhad: f ∈ Θ(g) <=> f ∈ O(g) a f ∈ Ω(g)
 
 Typické třídy asymptotické složitosti jsou
 - O(1)
@@ -215,12 +215,23 @@ a(x) = a<sub>n</sub>x<sup>n</sup> + a<sub>n-1</sub>x<sup>n-1</sup> ... + a<sub>1
   - n stupeň polynomu
   - a<sub>0</sub>, ...,a<sub>n</sub> koeficienty (reálné konstanty)
   - x proměnná, dosazujeme různé hodnoty
+
+Přímý výpočet podle předpisu 
+
+- počet násobení: n + (n-1) + (n-2) + ... + 1 = $\frac{n(n+1)}{2}$
+- počet sčítání: n
+- časová složitost: Θ(n<sup>2</sup>)
+
+Hornerovo schéma
+
+a(x) = (...((a<sub>n</sub>x + a<sub>n-1</sub>)x + a<sub>n-2</sub>)x + ... + a<sub>1</sub>)x + a<sub>0</sub>
+  - počet násobení: n
+  - počet sčítání: n
+  - časová složitost: Θ(n)
     
 
 
       
-
-
 
 
 
