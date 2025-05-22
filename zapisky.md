@@ -111,8 +111,13 @@ return y
 Test prvočíselnosti 
 
 - zkusit všechny dělitele od 2 do N-1, cca O(N)
-- zkusit všechny dělitele od 2 do N/2, cca O(N) ale lepší
-- zkusit všechny dělitele od 2 do $\sqrt{2}$
+- zkusit všechny dělitele od 2 do $\frac{N}{2}$, cca O(N) ale lepší
+- zkusit všechny dělitele od 2 do $\sqrt{N}$, cca O($\sqrt{N}$)
+- zkusit dělitele od 2 do $\sqrt{N}$ do nalezení prvního
+  - v nejhoším O($\sqrt{N}$)
+  - v nejlepším 1
+- zkusit 2 a poté liché dělitele lichých čísel
+
 
 
 
