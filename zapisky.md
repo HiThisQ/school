@@ -71,5 +71,49 @@ Typické třídy asymptotické složitosti jsou
 polynomiálně omezený čas zvládnutelný i pro velká n, exponenciální časově nezvládnutelný
 ## 2. přednáška, základní algoritmy
 
+Složitost algoritmu v různých příkladech:
+
+Pro každá vstupní data velikosti \n nemusí trvat výpočet stejně dlouho
+Časová složitost algoritmu v
+- nejhorším případě: maximální počet vykonaných operací
+- nejlepším případě: minimální počet vykonaných operací
+- průměrném případě: očekávaný počet vykonaných operací
+nejčastěji se používá časová složitost v nejhorším případě
+v průměrném případě se dobře charakterizuje kvalita algoritmu, ale je obtížně oddůvoditelná
+
+Složitost problému:
+
+- složitost nejlepšího algoritmu (z hlediska časové složitosti),
+kterým lze řešit daný problém
+
+odvození bývá často obtížné, pro řadu problémů je složitost neznámá
+
+Pro dokazování nejhoršího případu potřebujeme
+- existuje algoritmus, který vyřeší problém v dané časové složitosti v nejhorším případě, předvedeme konkrétní algoritmus
+- každý algoritmus řešící daný problém pracuje v dané časové složitosti v nejhorším příkladě, bývá složité na dokázání
+
+Příklad
+Nalézt maximum z N čísel
+- existuje algoritmus v čase O(N)
+- nemůže existovat algoritmus s lepší časovou obtížností, protože musíme projít všech N čísel
+
+Základní algoritmy s čísly:
+
+Rozklad čísla na cifry
+```python
+def ciferny_soucet(x):
+y = 0
+while x != 0:
+  y += x % 10
+  x //= 10
+return y
+```
+Test prvočíselnosti 
+
+- zkusit všechny dělitele od 2 do N-1, cca O(N)
+- zkusit všechny dělitele od 2 do N/2, cca O(N) ale lepší
+- zkusit všechny dělitele od 2 do $\sqrt{2}$
+
+
 
 
