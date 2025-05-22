@@ -25,7 +25,7 @@ NSD(x,y), od 1 do min(x,y)
 - Euklidův algoritmus:
   - x < y --> NSD(x,y) = NSD(x,y-x)
   - x > y --> NSD(x,y) = NSD(x-y,y)
-  - x = y --> NSD(x,y) = X
+  - x = y --> NSD(x,y) = x
 ```python
 while y > 0:
   z = x % y
