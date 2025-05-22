@@ -50,6 +50,25 @@ funkce časové i prostorové složitosti většinou rostoucí
 
 Asymptotická časová složitost:
 
+Symbol velké O, odhad zhora
+f, g: N → R
+f ∈ O(g) <=> E c > 0 V n0 > 0 V n ≥ n0 : 0 ≤ f(n) ≤ c.g(n)
+
+Opačný odhad zdola: f ∈ Omega(g) 0 ≤ c.g(n) ≤ f(n)
+
+Přesný (těsný) odhad: f ∈ Phi(g) <=> f ∈ O(g) a f ∈ Omega(g)
+
+Typické třídy asymptotické složitosti jsou
+- O(1)
+- O(log N)
+- O(N)
+- O(N log N)
+- O(N <sup>2<\sup>)
+- O(N <sup>x<\sup>)
+- O(2 <sup>N<\sup>)
+- O(N!)
 
 
-  
+
+
+
