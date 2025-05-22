@@ -16,3 +16,20 @@ Typické vlastnosti:
 - resultativnost
 - jednoznačnost
 - determinismus
+
+Největší společný dělitel:
+
+NSD(x,y), od 1 do min(x,y)
+- zkoušet od min(x,y) dolů do nalezení prvního společného dělitele
+- nalézt prvočíselné rozklady x,y, maximální společná část je pak NSD(x,y
+- Euklidův algoritmus:
+  - x < y --> NSD(x,y) = NSD(x,y-x)
+  - x > y --> NSD(x,y) = NSD(x-y,y)
+  - x = y --> NSD(x,y) = X
+```python
+while y > 0:
+  z = x % y
+  x = y
+  y = z
+print(x)
+```
