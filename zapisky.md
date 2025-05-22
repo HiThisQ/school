@@ -216,13 +216,13 @@ a(x) = a<sub>n</sub>x<sup>n</sup> + a<sub>n-1</sub>x<sup>n-1</sup> ... + a<sub>1
     - a<sub>0</sub>, ...,a<sub>n</sub> koeficienty (reálné konstanty)
     - x proměnná, dosazujeme různé hodnoty
 
-- Přímý výpočet podle předpisu 
+Přímý výpočet podle předpisu 
 
 - počet násobení: n + (n-1) + (n-2) + ... + 1 = $\frac{n(n+1)}{2}$
 - počet sčítání: n
 - časová složitost: Θ(n<sup>2</sup>)
 
-- Hornerovo schéma
+Hornerovo schéma
 
 a(x) = (...((a<sub>n</sub>x + a<sub>n-1</sub>)x + a<sub>n-2</sub>)x + ... + a<sub>1</sub>)x + a<sub>0</sub>
   - počet násobení: n
