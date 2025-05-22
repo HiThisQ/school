@@ -50,7 +50,7 @@ funkce časové i prostorové složitosti většinou rostoucí
 
 ### Asymptotická časová složitost:
 
-Symbol velké O, odhad zhora
+Symbol velké O, odhad shora
 f, g: N → R
 f ∈ O(g) <=> E c > 0 V n0 > 0 V n ≥ n0 : 0 ≤ f(n) ≤ c.g(n)
 
