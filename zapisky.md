@@ -287,6 +287,84 @@ převod z šestnáctkové soustavy na číselnou hodnotu
 
 A1F = ***A***.16<sup>2</sup> + ***1***.16<sup>1</sup> + ***F***.16<sup>0</sup> = ***10***.16<sup>2</sup> + ***1***.16<sup>1</sup> + ***15***.16<sup>0</sup> = (***10***.16 + ***1***)16 + ***15*** = 2591
 
+Převod binárního zápisu (str) na číselnou hodnotu, O(N)
+```python
+def bin_int(s):
+  n = 0
+  for i in range(len(s)):
+    n = n * 2 + int(s[i])
+  return n
+```
+Převod hexadecimálního zápisu (str) na číselnou hodnotu, O(N)
+```python
+def hex_int(s):
+  cifry = "0123456789ABCDEF"
+  n = 0
+  for i in range(len(s)):
+    n = n * 16 + cifry.index(s[i])
+  return n
+```
+Pro převod číselné hodnoty do dvojkové soustavy využijeme Hornerovo schéme v opačném směru, posloupnost zbytků při celočíselném dělení dvěma tvoří odzadu dvojkový zápis čísla, O(n)
+```python
+def int_bin(n):
+  if n == 0:
+    return "0"
+  s = []
+  while n > 0:
+    s.append.(str(n % 2))
+    n //= 2
+  return "".join(reversed(s))
+```
+Převod z číselné hodnoty do hexadecimální soustavy, O(n)
+```python
+def int_hex(n):
+  if n == 0:
+    return "0"
+  cifry = "0123456789ABCDEF"
+  s = []
+  while n > 0:
+    s.append(cifry[n % 16])
+    n //= 16
+  return "".join(reverse(s))
+```
+#### Rychlé umocňování 
+
+Příklad
+
+spočítat hodnotu x<sup>n</sup> 
+ - n: velké kladné číslo
+ - x: reálné číslo(nebo matice)
+
+přímočaré řešení, Θ(N)
+```python
+def mocnina1(x, n):
+  v = 1
+  for i in range(n):
+    v *= x
+  return v
+```
+postupně počítáme hodnoty x, x<sup>2</sup>, x<sup>4</sup>... a vhodne z nich nasobime
+
+mocninu muzeme rozlozit na definitivni rozklad mocnin dvojky a jsou to ty mocniny dvojky, kde je jednička v binárním zápisu čísla n, Θ(log N)
+
+
+```python
+def mocnina2(x, n):
+  v = 1
+  while n > 0:
+    if n % 2 == 1:
+      v *= x
+    x = *= x
+    n //= 2
+  return v
+```
+
+  
+  
+  
+
+
+
 
 
 
