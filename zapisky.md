@@ -2,7 +2,7 @@
 
 ## 1. přednáška, časová složitost
 
-Algoritmus:
+###Algoritmus:
 
 intuitivní pojem, není pro něj specifikcká definice
 možnou definicí by mohlo být
@@ -93,6 +93,7 @@ Pro dokazování nejhoršího případu potřebujeme
 - každý algoritmus řešící daný problém pracuje v dané časové složitosti v nejhorším příkladě, bývá složité na dokázání
 
 Příklad
+
 Nalézt maximum z N čísel
 - existuje algoritmus v čase O(N)
 - nemůže existovat algoritmus s lepší časovou obtížností, protože musíme projít všech N čísel
