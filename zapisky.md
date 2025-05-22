@@ -1,6 +1,6 @@
 # Zkouška
 
-## 1. přednáška
+## 1. přednáška, časová složitost
 
 Algoritmus:
 
@@ -63,12 +63,13 @@ Typické třídy asymptotické složitosti jsou
 - O(log N)
 - O(N)
 - O(N log N)
-- O(N <sup>2</sup>)
-- O(N <sup>x</sup>)
-- O(2 <sup>N</sup>)
+- O(N<sup>2</sup>)
+- O(N<sup>x</sup>)
+- O(2<sup>N</sup>)
 - O(N!)
 
-
+polynomiálně omezený čas zvládnutelný i pro velká n, exponenciální časově nezvládnutelný
+## 2. přednáška, základní algoritmy
 
 
 
