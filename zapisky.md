@@ -167,7 +167,7 @@ def eratosth(n):
 #### Dlouhá čísla 
 
 počítání s čísly s desítkami nebo stovkami cifer
-pyzhon to umí sám
+python to umí sám
 
 reprezentace
 - vytvoříme seznam cifer
