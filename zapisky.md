@@ -424,7 +424,7 @@ Rychlejší metody, O(n log(n))
 - QuickSort: třídění rozdělováním
 - HeapSort: třídění haldou
 
-Přihrádkové metody, O linéární, ne nutně k n
+Přihrádkové metody, O lineární, ne nutně k n
 - CountSort: třídění počítáním
 - BucketSort: přihrádkové třídění
 - RadixSort: víceprůchodové přihrádkové třídění
