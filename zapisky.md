@@ -501,7 +501,8 @@ def merge(s, zac, stred, kon, temp):
   else:    #zbytek druheho useku
     temp[k:kon+1] = s[j:kon+1]
   s[zac:kon+1] = temp[zac:kon+1]
-
+```
+![Popis obrázku](novaslozka/merge_sort_algorithm_diagram.svg)
 
 
 
