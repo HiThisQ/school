@@ -1079,12 +1079,10 @@ def fib(n):
   return b
 ```
 využití umocňování matice, O(log n)
-$$
-\begin{pmatrix}
-0 & 1 \\
-1 & 1
-\end{pmatrix}^n
-$$
+
+[[0, 1], [1, 1]]^n
+
+
 
 
 
