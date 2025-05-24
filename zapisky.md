@@ -923,6 +923,7 @@ class Linked_list:
                 current = current.next
         return False
 
+    #LSS konci na posloupnost druheho LSS
     def ends_with_m(self, m):
         len_self = self.len()
         len_m = m.len()
