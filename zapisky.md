@@ -1103,6 +1103,12 @@ definována jako nejdelší cesty z kořenu do listu
 - maximální výška, degenerovaný strom: H = N
 - průměrná výška: O(log n)
 
+Příklady použití
+- halda
+- binární vyhledávací strom
+- reprezentace aritmetického výrazu
+
+#### Průchod binárním stromem do hloubky (DFS)
 
 
 
