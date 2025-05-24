@@ -358,6 +358,39 @@ def mocnina2(x, n):
 ```
 ## Přednáška 3, Vyhledávání v seznamu
 
+Příklad
+
+kde se nachází daná hodnota x v seznamu pokud v něm je
+
+Základní algoritmus je sekvenční vyhledávání, jeden průchod celým polem, neefektivní, O(N)
+```python
+j = -1
+for i in range(len(s)):
+  if a[i] == x:
+    j = i
+    break
+if j == -1:
+  print ("není tam")
+else:
+  print("je na pozici", j)
+```
+pomocí while cykklu
+```python
+i = 0
+while i < len(a) and s[i] =! x:
+  i += 1
+if i = len(s):
+  print("není tam")
+else:
+  print("je na pozici", i)
+```
+binární vyhledávání 
+
+Data musí být uspořádaná, vezmeme prostřední prvek a porovnáme ho s hledaným, dále se dívame jen na menší nebo větší půlku a dostáváme úseky $frac{n}{2}$, $frac{n}{4}$, $frac{n}{8}$...1
+
+časová složitost - n/2 
+
+
 
   
   
