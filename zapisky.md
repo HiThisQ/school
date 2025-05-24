@@ -1097,17 +1097,11 @@ def __init__(self, x = None, l = None, r = None):
 
 Výška H binárního stromu o N uzlech
 
-nejdelší cesty z kořenu do listu
+definována jako nejdelší cesty z kořenu do listu
 
-minimální výšku má vyvážený strom
-
-N = 2<sup>0</sup> + 2<sup>1</sup> + 2<sup>2</sup> + ... + 2<sup>H</sup> = 2<sup>H + 1</sup> - 1 --> H = log<sub>2</sub>n
-
-maximální výšku má degenerovaný strom
-
-H = N
-
-průměrná výška je O(log n)
+- minimální výška, vyvážený strom: N = 2<sup>0</sup> + 2<sup>1</sup> + 2<sup>2</sup> + ... + 2<sup>H</sup> = 2<sup>H + 1</sup> - 1 --> H = log<sub>2</sub>n
+- maximální výška, degenerovaný strom: H = N
+- průměrná výška: O(log n)
 
 
 
