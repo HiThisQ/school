@@ -1114,6 +1114,9 @@ Varianty průchodu podle pořadí zpracování vrcholů
 - Preorder: nejprve vrchol pak jde postupně do obou podstromů
 - Postorder: nejprve do obou podstromů pak na vrchol samotný
 - Inorder: nejprve levý podstrom pak vrchol pak pravý podstrom
+<p align="center">
+  <img src="nova_slozka/ppi.png" alt="PPI diagram" width="550">
+</p>
 
 
 
