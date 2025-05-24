@@ -1110,6 +1110,11 @@ Příklady použití
 
 #### Průchod binárním stromem do hloubky (DFS)
 
+Varianty průchodu podle pořadí zpracování vrcholů 
+- Preorder: nejprve vrchol pak jde postupně do obou podstromů
+- Postorder: nejprve do obou podstromů pak na vrchol samotný
+- Inorder: nejprve levý podstrom pak vrchol pak pravý podstrom
+
 
 
 
