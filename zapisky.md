@@ -388,7 +388,123 @@ binární vyhledávání
 
 Data musí být uspořádaná, vezmeme prostřední prvek a porovnáme ho s hledaným, dále se dívame jen na menší nebo větší půlku a dostáváme úseky $\frac{n}{2}$, $\frac{n}{4}$, $\frac{n}{8}$...1
 
-časová složitost - $\frac{n}{2^k}$ = 1 --> n = 2<sup>k</sup> --> log<sub>k</sub>(n) = log<sub>k</sub>(2<sup>k</sup>) --> log<sub>k</sub>(n) = k tedy O(log(n))
+časová složitost - $\frac{n}{2^k}$ = 1 --> n = 2<sup>k</sup> --> log<sub>2</sub>(n) = log<sub>2</sub>(2<sup>k</sup>) --> log<sub>2</sub>(n) = k tedy O(log(n))
+```python
+i = 0    #začátek úseku
+j = len(s) - 1    #konec úseku
+k = (i + j) // 2    #střed úseku
+
+while a[k] != x and i <= j:
+  if x > a[k]:
+    i = k + 1
+  else:
+    j = k - 1
+  k = (i + j)//2
+
+if x == a[k]:
+  print("je na pozici", k)    
+else:
+  print("není tam")    #při více vyskytů najde některý z nich
+```
+
+### Řazení dat v poli
+
+Úloha uspořádat prvky podle velikosti
+
+Přímé metody, O(n<sup>2</sup>)
+- SelectSort: třídění výběrem, přímý výběr
+- InsertSort: třídění vkládáním, přímé zatřiďování
+- BubbleSort: třídění změnami, bublinkové tříďění
+
+Rychlejší metody, O(n log(n))
+- MergeSort: třídění sléváním
+- QuickSort: třídění rozdělováním
+- HeapSort: třídění haldou
+
+Přihrádkové metody, O linéární, ne nutně k n
+- CountSort: třídění počítáním
+- BucketSort: přihrádkové třídění
+- RadixSort: víceprůchodové přihrádkové třídění
+
+Python sám umí řadit pomocí sorted(), sort()
+
+Select sort, Θ(n<sup>2</sup>)
+
+pole dělíme na setříděné vlevo a nesetřídené vpravo, vždy najdeme nesetříděný prvek a posuneme ho co nejvíce doleva
+```python
+def select_sort(s):
+  for i in range(len(s) - 1)
+    k = i
+      for j in range(i + 1, len(s)):
+        if s[j] < s[k]:
+          k = j
+      if k > i:
+        s[k], s[i] = s[i], s[k]
+```
+Insert sort, Θ(n<sup>2</sup>)
+
+pole rozdělíme na setříděné vlevo a nesetříděné vpravo, na začátku je setříděný první prvek a poté se vždy první z nesetříděného řadí na své místo v setříděném
+```python
+def insert_sort(s):
+  for i in range(1, len(s)):
+    x = s[i]
+    j = i - 1
+    while j >= 0 and x < a[j]:
+      a[j+1] = a[j]
+      j -= 1
+    a[j+1] = x
+```
+Bubble sort,  Θ(n<sup>2</sup>)
+
+procházíme polem a porovnáváme sousední prvk, jsou-li špatně vyměníme je
+```python
+def bubble_sort(s):
+  for i in range(len(s)-1):    #počítadlo průchodů
+    for j in range(len(s)-i-1):
+      if a[j] > a[j+1]:
+        a[j], a[j+1] = a[j+1], a[j]
+```
+Merge sort, prostorová složitost Θ(n), celková časová složitost Θ(n log n) 
+
+log2n kroků výpočtu, v každém z nich se vykoná práce Θ(n)
+
+nejdříve porovnáme dvojice a dostaneme pole uspořádaných dvojic, poté sléváme první a drohou, třetí a čtvrtou dvoji do čtveřice, takto děláme stále větší kusy
+```python
+def mergesort(s):
+  n = len(s)
+  temp = [None] * n
+
+  usek = 1
+  while usek < n
+    for zacatek in range(0, n-usek, 2*usek):
+      stred = zacatek + usek - 1
+      konec = min(stred + usek. n-1)
+      merge(s, zacatek, stred, konec, temp)
+    usek *= 2
+
+def merge(s, zac, stred, kon, temp):
+  i = zac    #zacatek prvniho useku
+  j = stred + 1    #zacatek druheho useku
+  k = zac    #zacatek vysledenho seznamu
+
+  while i <= stred and j <= kon:
+    if s[i] < s[j]:
+      temp[k] = s[i]
+      i += 1
+    else:
+      temp[k] = a[j]
+      j += 1
+    k += 1
+
+  if i <= stred:    #zbytek prvniho useku
+    temp[k:kon+1] = s[i:stred+1]
+  else:    #zbytek druheho useku
+    temp[k:kon+1] = s[j:kon+1]
+  s[zac:kon+1] = temp[zac:kon+1]
+
+
+
+
 
 
 
