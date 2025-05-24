@@ -471,7 +471,7 @@ def bubble_sort(s):
 
 prostorová složitost Θ(n)
 
-log2n kroků výpočtu, v každém z nich se vykoná práce Θ(n)
+log<sub>2</sub>n kroků výpočtu, v každém z nich se vykoná práce Θ(n)
 
 nejdříve porovnáme dvojice a dostaneme pole uspořádaných dvojic, poté sléváme první a drohou, třetí a čtvrtou dvoji do čtveřice, takto děláme stále větší kusy
 ```python
