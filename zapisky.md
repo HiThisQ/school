@@ -502,9 +502,12 @@ def merge(s, zac, stred, kon, temp):
     temp[k:kon+1] = s[j:kon+1]
   s[zac:kon+1] = temp[zac:kon+1]
 ```
-Algoritmus na obrázku
+Algoritmus merge sort
 
 ![Popis obrázku](nova_slozka/Merge_sort_algorithm_diagram.svg)
+<p align="center">
+  <img src="nova_slozka/Merge_sort_algorithm_diagram.svg" alt="Diagram Merge Sortu" width="300">
+</p>
 
 
 
