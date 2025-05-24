@@ -74,10 +74,12 @@ polynomiálně omezený čas zvládnutelný i pro velká n, exponenciální čas
 ### Složitost algoritmu v různých příkladech:
 
 Pro každá vstupní data velikosti N nemusí trvat výpočet stejně dlouho
+
 Časová složitost algoritmu v
 - nejhorším případě: maximální počet vykonaných operací
 - nejlepším případě: minimální počet vykonaných operací
 - průměrném případě: očekávaný počet vykonaných operací
+
 nejčastěji se používá časová složitost v nejhorším případě
 v průměrném případě se dobře charakterizuje kvalita algoritmu, ale je obtížně oddůvoditelná
 
