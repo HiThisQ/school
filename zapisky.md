@@ -192,6 +192,8 @@ Výstup: c je výsledný seznam cifer součtu čísel a + b
 - sčítání s přenosem v rozsahu cifer kratšího čísla
 - ošetřit přečnívající část delšího čísla
 - přidat případný poslední nenulový přenos
+
+při dělání přes spojové listy (LSS) nejsme omezeni počtem cifer, nutno otáčet seznam
 ```python
 if len(a) < len(b)
   a, b = b, a
@@ -241,6 +243,7 @@ def horner(a, x):
 ```
 Příklady použití jsou vstup čísla po znacích nebo konverze číselného str na int
 
+pomocí LSS, v každém uzlu uložen koeficient a exponent jednoho členu, vyhodné mít ho uspořádaný
 #### Operace s polynomy 
 
 a(x) = a<sub>n</sub>x<sup>n</sup> + a<sub>n-1</sub>x<sup>n-1</sup> ... + a<sub>1</sub>x + a<sub>0</sub>
@@ -733,7 +736,355 @@ možnosti implementace
 
 ## Přednáška 5, spojové seznamy 
 
-###
+### Lineární spojový seznam (LSS)
+
+```python
+class Uzel:
+  def __init__(self, x = None, dal = None):
+    self.info = x    #uložená hodnota
+    self.dalsi = dal    #následník
+
+p = Uzel(10)
+q = Uzel(20)
+r = Uzel(30)
+p.dalsi = q
+q.dalsi = r
+
+p = Uzel(10, Uzel(20, Uzel(30)))
+
+#průchod a výpis
+s = p
+while s != None:
+  print(s.info, end = " ")
+  s = s.dalsi
+print()
+
+#posledni uzel
+if p == None:
+  print("prazdny seznam")
+else:
+  s = p
+  while s.dalsi != None
+    s = s.dalsi
+  print(s.info)
+
+#vyhledání zadané hodnoty
+hodnota = 2O
+print("hledame", hodnota)
+s = p
+while s != None and s.info != hodnota:
+  s = s.dalsi
+if s == None:
+  print("nenalezen")
+else:
+  print("nalezen", s.info)
+
+#pridani na zacatek
+t = Uzel(40)
+t.dalsi = p
+p = t
+
+#pridani na konec seznamu
+if p == None:
+  p = Uzel(50)
+else:
+  s = p
+  while s.dalsi != None:
+    s = s.dalsi
+  s.dalsi = Uzel(50)
+```
+Operace se spojovým sezname
+
+- určit počet prvků
+- vypsat všechny hodnoty
+- nalezení posledního prvku
+- vyhledání prvku s danou hodnotou
+- přidání prvku na začátek/konec
+- vytvoření seznamu z dat na vstupu
+- vytvoření kopie seznamu
+- přidání prvku na místo
+- přidání prvku do uspořádaného seznamu
+- odebrání prvku ze začátku/konce
+- odebrání daného prvku
+- zrušení všech prvků v seznamu s danou hodnotou
+- obrácení pořadí
+- uspořádání pomocí hodnoty
+- spojení dvou seznamů do sebe
+- slití (merge) dvou uspořádaných seznamů do sebe
+- rozdělení do dvou
+```python
+class Node:
+    def __init__(self, value):
+        self.value = value
+        self.next = None
+
+class Linked_list:
+    def __init__(self, value):
+        self.head = None
+        current = None
+        for x in value:
+            node = Node(x)
+            if not self.head:
+                self.head = node
+                current = self.head
+            else:
+                current.next = node
+                current = current.next
+                
+    #převedení LSS do lsitu            
+    def to_list(self):
+        list = []
+        current = self.head
+        while current is not None:
+            list.append(current.value)
+            current = current.next
+        return list
+    
+    #délka LSS
+    def len(self):
+        c = 0
+        current = self.head
+        while current is not None:
+            c += 1
+            current = current.next
+        return c
+    
+    #vrať poslední prvek
+    def get_n(self, n):
+        current = self.head
+        for x in range(n):
+            current = current.next
+        return current.value
+    
+    #obsahuje prvek x
+    def has_x(self, x):
+        current = self.head
+        while current is not None:
+            if current.value == x:
+                return True
+            current = current.next
+        return False
+
+    #odebrání prvku x 
+    def delete_x(self, x):
+        current = self.head
+        if self.head == x:
+            self.head = self.head.next
+            return
+        while current.next is not None:
+            if current.next == x:
+                current.next = current.next.next
+            current = current.next
+        return
+
+    #převrácení LSS
+    def rotate(self):
+        if self.len() <= 1:
+            return
+        previous = None
+        current = self.head
+        while current.next is not None:
+            previous = current
+            current = current.next
+        previous.next = None
+        current.next = self.head
+        self.head = current
+        return
+    
+    #pomocná funkce na tačínající prvek
+    def starts(self, p, q):
+        while p is not None and q is not None:
+            if p.value != q.value:
+                return False
+            p = p.next
+            q = q.next
+        if q is not None:
+            return False
+        else:
+            return True
+
+    #začínají jeden LSS hodnotami v druhém
+    def starts_with_m(self, m):
+        list1 = self.head
+        list2 = m.head
+        if self.starts(list1, list2) is True:
+            return True
+        else:
+            return False
+    
+    #obsahuje jeden LSS prvky druhého ve stejném pořadí 
+    def contains_m(self, m):
+        current = self.head
+        list2 = m.head
+        while current is not None:
+            if self.starts(current, list2) is True:
+                return True
+            else:
+                current = current.next
+        return False
+
+    def ends_with_m(self, m):
+        len_self = self.len()
+        len_m = m.len()
+        current = self.head
+        list2 = m.head
+        difference = len_self - len_m
+        if len_self < len_m:
+            return False
+        for x in range(difference):
+            current = current.next
+        if self.starts(current, list2) is True:
+            return True
+        else:
+            return False
+```
+Příklady použití LSS
+
+#### Zásobník 
+```python
+class Zasobnik
+
+  def __innit__(self):
+    self.s = []
+
+  def pridej(self.x):
+    self.s.append(x)
+
+  def odeber(x)
+    return self.s.pop()
+```
+#### Fronta 
+
+realizována jednoduchým LSS a dvěma ukazateli na začátek a na konec
+
+na začátku LSS bude odchod a na konci příchod, protože na konci se špatně odebírá
+
+#### Druhy LSS
+
+- obyčejný seznam (doposud)
+- obousměrný seznam
+- cyklický seznam
+- seznam s hlavou
+
+Obousměrný seznam
+```python
+class Uzel:
+  def __init__(self, x = None):
+    self.info = x
+    self.za = None
+    self.pred = none
+```
+paměťově náročnější než obyčejný, umožňuje procházení seznamem oběma směry
+
+Cyklický seznam
+
+poslední prvek seznamu neodkazuje na None, ale na první prvek
+
+lze použít i v obousměrném pak ukazuje i na prvek .pred
+
+Seznam s hlavou
+
+hlava - jeden prvek navíc umístěný na začátku seznamu, neobsahuje uloženou hodnotu, ale ani není None
+
+## Přednáška 6, Rekurze, binární a obecné stromy
+
+### Rekurze 
+
+Objekt nebo jev je definován pomocí sama sebe
+
+dvě možnosti
+- rekurzivní algoritmus: řešení úlohy pomocí řešení menších instancí téhož problému
+- rekurzivní volání funkce: fukce volá sama sebe
+
+Příklady
+
+výpis znaků pozpátku
+```python
+def otoc():
+  u = input("znak: ")
+  if u != " ":
+    otoc()
+  print u
+# vstup - výstup
+A  -  " "
+B  -  C
+C  -  B
+" "  -  A
+```
+palindrom
+```python
+def palindrom(s):
+  n = len(s)
+  for i in range(n//2):
+    if s[i] != s[n-i-1]:
+      return False
+  return True
+
+def palindrom2(s):
+  if len(s) <= 1:
+    return True
+  else:
+    return s[0] == s[-1] and palindrom2(s[+:-1])
+```
+Euklidův algoritmus
+```python
+def nsd(x,y):
+  while x§= y:
+    if x > y:
+      x -= y
+    else:
+      y -= x
+  return x
+```
+nebo
+```python
+def nsd(x, y):
+  if y == O:
+    return x
+  return nsd(y, x % y)
+```
+faktoriál n
+```python
+def faktorial(n):
+  f = 1
+  for i in range(2, n+1)
+    f *= i
+  return f
+
+def faktorial(n):
+  if n == 0:
+    return 1
+  else:
+    return n * faktorial(n-1)
+```
+Fibonacciho čísla 
+```python
+def fib(n):
+  if n == O or n == 1:
+    return n
+  else:
+    return fib(n-1) + fib(n-2)
+```
+teoreticky správná rekurze, ale časová složitost je exponenciální, pro n > 40 nepoužitelná, mnohokrát se počítají stejné věci
+
+řešení pomocí dynamického programování nebo meoizace, O(n)
+```python
+def fib(n):
+  if n == 0:
+    return 0
+  a = 0; b = 1
+  while n > 1:
+    a,b = b, a+b
+    n -= 1
+  return b
+```
+využití umocňování matice, O(log n)
+$$
+\begin{pmatrix}
+0 & 1 \\
+1 & 1
+\end{pmatrix}^n
+$$
 
 
 
@@ -742,7 +1093,3 @@ možnosti implementace
 
 
 
-
-  
-  
-  
