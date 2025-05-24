@@ -504,9 +504,8 @@ def merge(s, zac, stred, kon, temp):
 ```
 Algoritmus merge sort
 
-![Popis obrázku](nova_slozka/Merge_sort_algorithm_diagram.svg)
 <p align="center">
-  <img src="nova_slozka/Merge_sort_algorithm_diagram.svg" alt="Diagram Merge Sortu" width="300">
+  <img src="nova_slozka/Merge_sort_algorithm_diagram.svg" alt="Diagram Merge Sortu" width="450">
 </p>
 
 
