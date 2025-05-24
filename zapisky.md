@@ -1092,7 +1092,7 @@ def __init__(self, x = None, l = None, r = None):
   self.pravy = r
 ```
 <p align="center">
-  <img src="nova_slozka/tree.png" alt="Stromový diagram" width="300">
+  <img src="nova_slozka/tree.png" alt="Stromový diagram" width="500">
 </p>
 
 
