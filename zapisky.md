@@ -1068,7 +1068,7 @@ def fib(n):
 ```
 teoreticky správná rekurze, ale časová složitost je exponenciální, pro n > 40 nepoužitelná, mnohokrát se počítají stejné věci
 
-řešení pomocí dynamického programování nebo meoizace, O(n)
+řešení pomocí dynamického programování nebo memoizace, O(n)
 ```python
 def fib(n):
   if n == 0:
@@ -1094,6 +1094,20 @@ def __init__(self, x = None, l = None, r = None):
 <p align="center">
   <img src="nova_slozka/tree.png" alt="Stromový diagram" width="650">
 </p>
+
+Výška H binárního stromu o N uzlech
+
+nejdelší cesty z kořenu do listu
+
+minimální výšku má vyvážený strom
+
+N = 2<sup>0</sup> + 2<sup>1</sup> + 2<sup>2</sup> + ... + 2<sup>H</sup> = 2<sup>H + 1</sup> - 1 --> H = log<sub>2</sub>n
+
+maximální výšku má degenerovaný strom
+
+H = N
+
+průměrná výška je O(log n)
 
 
 
