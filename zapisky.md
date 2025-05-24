@@ -386,7 +386,7 @@ else:
 ```
 binární vyhledávání 
 
-Data musí být uspořádaná, vezmeme prostřední prvek a porovnáme ho s hledaným, dále se dívame jen na menší nebo větší půlku a dostáváme úseky $frac{n}{2}$, $frac{n}{4}$, $frac{n}{8}$...1
+Data musí být uspořádaná, vezmeme prostřední prvek a porovnáme ho s hledaným, dále se dívame jen na menší nebo větší půlku a dostáváme úseky $\frac{n}{2}$, $\frac{n}{4}$, $\frac{n}{8}$...1
 
 časová složitost - n/2 
 
