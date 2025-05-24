@@ -428,7 +428,7 @@ Přihrádkové metody, O linéární, ne nutně k n
 
 Python sám umí řadit pomocí sorted(), sort()
 
-Select sort, Θ(n<sup>2</sup>)
+### Select sort, Θ(n<sup>2</sup>)
 
 pole dělíme na setříděné vlevo a nesetřídené vpravo, vždy najdeme nesetříděný prvek a posuneme ho co nejvíce doleva
 ```python
@@ -441,7 +441,7 @@ def select_sort(s):
       if k > i:
         s[k], s[i] = s[i], s[k]
 ```
-Insert sort, Θ(n<sup>2</sup>)
+### Insert sort, Θ(n<sup>2</sup>)
 
 pole rozdělíme na setříděné vlevo a nesetříděné vpravo, na začátku je setříděný první prvek a poté se vždy první z nesetříděného řadí na své místo v setříděném
 ```python
@@ -454,7 +454,7 @@ def insert_sort(s):
       j -= 1
     a[j+1] = x
 ```
-Bubble sort,  Θ(n<sup>2</sup>)
+### Bubble sort,  Θ(n<sup>2</sup>)
 
 procházíme polem a porovnáváme sousední prvk, jsou-li špatně vyměníme je
 ```python
@@ -464,7 +464,9 @@ def bubble_sort(s):
       if a[j] > a[j+1]:
         a[j], a[j+1] = a[j+1], a[j]
 ```
-Merge sort, prostorová složitost Θ(n), celková časová složitost Θ(n log n) 
+### Merge sort, Θ(n log n) 
+
+prostorová složitost Θ(n)
 
 log2n kroků výpočtu, v každém z nich se vykoná práce Θ(n)
 
@@ -502,12 +504,152 @@ def merge(s, zac, stred, kon, temp):
     temp[k:kon+1] = s[j:kon+1]
   s[zac:kon+1] = temp[zac:kon+1]
 ```
-Algoritmus merge sort
 
 <p align="center">
   <img src="nova_slozka/Merge_sort_algorithm_diagram.svg" alt="Diagram Merge Sortu" width="450">
 </p>
 
+### Třídění s lineární složitostí 
+
+Třídíme celá čísla z předem známého rozsahu hodnot velikosti R, D = dolní mez, H = horní mez, R = H - D
+
+rozsah R není velký, vytvoříme v paměti seznam délky R, což je pole indexované od D do H a posouváme indexy o konstantu D
+
+lineární časová složitost
+
+### Count sort, O(n)
+
+třídíme pouze celá čísla
+
+Realizace
+- s = původní seznam délky n
+- b = setříděný seznam délky n
+- c = pomocný seznam celých čísel s indexy D..H
+
+projdeme seznam a, do seznamu c spočítáme váskyty hodnot, projdeme seznam c, z uložených hodnot vytvoříme seznam b v původním poli a 
+```python
+def count_sort(s, d, h):
+  c = [0] * (h-d)
+
+  for x in s:
+    c[x-d] += 1
+
+  b = []
+  for i in range(h-d):
+    for j in range(c[i]):
+      b.append(i+d)
+  return b
+```
+
+## Přednáška 4, Základní datové struktury
+
+### Reprezentace dat v paměti 
+
+- proměnná
+- statické a dynamické typování
+- hodnotové a referenční typy
+- mutable (list, dict...) a imutable (int, tuple...)
+
+### Operace se seznamem 
+
+- insert(index, hodnota)
+- remove(hodnota)
+- pop(index)
+- del(prvek)
+
+časová složitost O(n)
+
+- append(hodnota)
+- pop()
+
+na konci seznamu, časová složitost O(1)
+
+### Abstraktní datové typy
+
+Příklad
+- zásobník
+- fronta
+- halda
+
+#### Zásobník (stack)
+
+last in, first out
+
+pamatuje si pořafí, odebíráme nejdříve přidaný prvek, jasně určený spodní, jiný prvek než vrchol je nepřístupný
+
+konstantní časová složitost všech operací 
+
+příklad použití DFS (prohledávání do hloubky)
+
+Implementace 
+- zásobník reprezentován seznamem z
+- dno z[0]
+- vrchol z[-1]
+- inicializace z[]
+```python
+class Zasobnik:
+  def __init__(self):
+    self.s = []
+
+  def pridej(self, x):
+    self.s.append(x)
+
+  def odeber(self):
+    return self.s.pop()
+
+z = Zasobnik()
+
+z.pridej(37)
+print(z.odeber())
+```
+
+#### Fronta (queue)
+
+first in, first out
+
+pamatuje si pořadí, přidává se na konec odebíra ze začátku, přístup k jedninému nejstaršímu prvku
+
+konstantní časová složitost operací 
+
+příklad použití BFS (prohledávání do šířky)
+
+Implementace:
+- franta reprezentována seznamem f
+- konec fronty f[-1]
+- začátek fronty f[0]
+- inicializace f[0]
+
+odebírání prvku bude mít takto složitost O(n), funkce deque má složitost konstantí 
+```python
+from collections import deque
+f = deque
+f.append(x)
+x = f.popleft()
+```
+#### Halda (heap)
+
+nepamatuje si pořadí příchodu, prvky musí být porovnatelné, odebírá se vždy nejmenší(největší) prvek
+
+typickými operacemi je přidání prvku, určit minimální hodnotu, odebrat minimální prvek
+
+časová složitost O(log n)
+
+představujeme si jako binární strom, implementovaný v poli
+
+příklady použití jsou prioritní fronta (priority queue) nebo HeapSort 
+
+##### Reprezentace haldy
+
+pomocí binárního stromu se zcela zaplněnými hladinami kromě poslední, která je zaplněna souvisle zleva, výška haldy tedy log<sub>2</sub>(n)
+
+uspořádání hodnot otec ≤ syn
+
+Efektivita
+- určení minima O(1)
+- přidání prvku O(log n)
+- odebrání prvku O(log n)
+
+##### Operace na haldě 
 
 
 
