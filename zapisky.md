@@ -81,6 +81,7 @@ Pro každá vstupní data velikosti N nemusí trvat výpočet stejně dlouho
 - průměrném případě: očekávaný počet vykonaných operací
 
 nejčastěji se používá časová složitost v nejhorším případě
+
 v průměrném případě se dobře charakterizuje kvalita algoritmu, ale je obtížně oddůvoditelná
 
 ### Složitost problému:
