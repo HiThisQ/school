@@ -1082,6 +1082,15 @@ využití umocňování matice, O(log n)
 
 [[0, 1], [1, 1]]^n
 
+### Binární strom
+```python
+class Vrchol:
+def __init__(self, x = None, l = None, r = None):
+  self.info = x
+  self.levy = l
+  self.pravy = r
+```
+
 
 
 
