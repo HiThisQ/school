@@ -641,7 +641,7 @@ představujeme si jako binární strom, implementovaný v poli
 
 příklady použití jsou prioritní fronta (priority queue) nebo HeapSort 
 
-##### Reprezentace haldy
+ Reprezentace haldy:
 
 pomocí binárního stromu se zcela zaplněnými hladinami kromě poslední, která je zaplněna souvisle zleva, výška haldy tedy log<sub>2</sub>(n)
 
@@ -652,7 +652,90 @@ Efektivita
 - přidání prvku O(log n)
 - odebrání prvku O(log n)
 
-##### Operace na haldě 
+Operace na haldě:
+
+Přidání prvku:
+
+- nový uzel přidat do haldy n poslední hladinu úplně vlevo a přiřadit mu hodnotu
+- novou hodnotu opakovaně zaměňovat s hodnotou v otci dokud je třeba 
+
+Odebrání prvku:
+
+- odebrat minimum z kořene haldy
+- do kořene vložit hodnotu z posledního uzlu haldy a poslední uzel zrušit
+- přesunutou hodnotu zaměňovat s hodnotou v synovi dokud je třeba
+
+Implementace haldy 
+
+seznam ukládaných záznamů
+
+obsah haldy uložen po vrstvách 
+```python
+halda = [None]    #nepoužijeme index [0]
+
+def pridej(h, x)
+  h.append(x)
+  j = len(h) - 1
+  while j > 1 and h[j] < h[j//2]:
+    h[j], h[j//2] = h[j//2], h[j]
+    j //= 2
+
+def zrus_min(h):
+  if len h == 1:
+    return None
+  zrus = h[1]
+  h[1] = h[-1]
+  del h[-1]
+  j = 1
+  while 2*j < len(h):
+    n = 2*j
+    if n < len(h)-1:
+      if h[n+1] < h[n]:
+          n += 1
+    if h[j] > h[n]:
+      h[j], h[n] = h[n], h[j]
+      j = n
+    else break
+  return zrus
+```
+Konstrukce haldy v lineárním čase
+
+výchozí rozložení dat představuje binární strom
+
+nejprve postavíme haldy z podstromů, jejiž kořeny mají hloubku d-1, d-2,... záměnami hodnot kořene k listům
+
+důkaz probíhá přes matematickou indukci podle d 
+
+$$
+\sum_{j=0}^{d-1} (d - j) \cdot 2^j = \sum_{j=0}^{d-1} d \cdot 2^j - \sum_{j=0}^{d-1} j \cdot 2^j = d \cdot (2^d - 1) - \left((d - 2) \cdot 2^d + 2\right) = O(2^d) = O(N)
+$$
+
+$$
+\sum_{j=0}^{d-1} 2^j = 2^d - 1
+$$
+
+#### Heap sort, O(N log n)
+
+z prvků vytvoříme haldu, O(n log n) nebo zdola O(N)
+
+haldu postupně rozebrat (n-krat odebrat minimum), O(n log n)
+
+celková časová obtížnost tedy bude O(n log n) i v nejhorším případě
+
+#### Prioritní fronta (Priority queue)
+
+podobné jako fronta, prvky se "předbíhají" podle priorit
+
+možnosti implementace
+- seznam (pole,LSS) řazený podle priority
+- halda podle priority
+- halda řazená podle dvojic (priorita, čas příchodu)
+
+## Přednáška 5, spojové seznamy 
+
+###
+
+
 
 
 
@@ -663,15 +746,3 @@ Efektivita
   
   
   
-
-
-
-
-
-
-
-
-      
-
-
-
