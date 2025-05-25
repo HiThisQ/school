@@ -1146,7 +1146,7 @@ class Vrchol:
     if self.pravy != None:
       self.pravy.inorder()
 ```
-Průchod do hloubky a šířky (po vrstvách) bez použití rekurze
+Průchod do hloubky(DFS) a šířky(BFS, po vrstvách) bez použití rekurze
 ```python
 class Node:
     def __init__(self, info, levy=None, pravy=None):
@@ -1342,7 +1342,7 @@ balance(p) = výška(p.levy) - výška(p.pravy)
 
 ### Rekurzivní generování 
 
-vypsat všechna k-ciferná čísla v poziční soustavě o základu n
+##### vypsat všechna k-ciferná čísla v poziční soustavě o základu n
 
 Můžeme řešit:
 - pomocí dynamicky rostoucího seznamu
@@ -1379,7 +1379,7 @@ def generuj(p):
 
 generuj(0)
 ```
-Variace s opakováním
+##### Variace s opakováním
 
 k-prvkové z n-prvkové množiny{1, 2,...n}
 ```python
@@ -1397,7 +1397,7 @@ def variace(c):
 
 variace([])
 ```
-Kombinace bez opakování 
+##### Kombinace bez opakování 
 
 k-prvkové z n-prvkové množiny{1, 2,...n}
 ```python
@@ -1415,7 +1415,7 @@ def kombinace(p):
 
 kombinace(1)
 ```
-Doplnění znamének
+##### Doplnění znamének
 
 je dáno n kladných celých čísel a požadovaný součet c
 
@@ -1446,7 +1446,7 @@ def znamenko(p, soucet):  # p = pozice nového znaménka, součet = součet pře
 
 znamenko(0, 0)  # zavolání rekurzivní funkce – začínáme od indexu 0, dosavadní součet je 0
 ```
-Rozklad čísla 
+##### Rozklad čísla 
 
 Zadané kladné celé číslo n rozložte všemi různými způsoby na
 součet kladných celých sčítanců
