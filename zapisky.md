@@ -1319,7 +1319,8 @@ def postav(n):
   p.pravy = postav(n-1 - (n-1)//2)
   return p
 
-#hodnoty přidáme buď tak, že sestrojený strom procházíme metodou inorder a přiřazujeme hodnoty nebo hodnoty seřadíme vzestupně do listu "a" a rovnou ukládáme při sestrojení, jak ukázáno
+#hodnoty přidáme buď tak, že sestrojený strom procházíme metodou inorder a přiřazujeme hodnoty
+nebo hodnoty seřadíme vzestupně do listu "a" a rovnou ukládáme při sestrojení, jak ukázáno
 
 def strom(a, x, y):
   if x > y:
@@ -1349,6 +1350,7 @@ Můžeme řešit:
 - pomocí globálního pole pevné délky
 ```python
 #pomocí dynamického sezamu
+
 k = 4  # počet cifer
 n = 3  # základ soustavy
 
@@ -1467,6 +1469,23 @@ def rozklad(z, p):  # z - kolik zbývá rozložit, p - kolikátý sčítanec vyt
 rozklad(n, 1)  # rozložit "n", začínáme 1. sčítancem
 ```
 ## Přednáška 8, Grafy - reprezentace, procházení
+
+### Základní pojmy
+
+vrcholy(N/n), hrany(M/m)
+
+každá hrana spojuje 2 vrcholy, které jsou očíslovány 0 až n-1
+
+typy grafů
+- neorientovaný
+- orientovaný
+- smíšený
+- graf neohodnocený (hranově, vrcholově)
+- graf ohodnocený (heanově, vrcholově)
+- multigraf
+
+počet hran v grafu minmálně 0, maximálně $/frac{n(n-1)}{2}$
+
 
 
 
