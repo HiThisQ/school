@@ -1484,7 +1484,7 @@ typy grafů
 - graf ohodnocený (heanově, vrcholově)
 - multigraf
 
-počet hran v grafu minmálně 0, maximálně $/frac{n(n-1)}{2}$
+počet hran v grafu minmálně 0, maximálně $\frac{n(n-1)}{2}$
 
 
 
