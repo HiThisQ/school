@@ -1111,18 +1111,369 @@ Příklady použití
 #### Průchod binárním stromem do hloubky (DFS)
 
 Varianty průchodu podle pořadí zpracování vrcholů 
-- Preorder: nejprve vrchol pak jde postupně do obou podstromů
-- Postorder: nejprve do obou podstromů pak na vrchol samotný
-- Inorder: nejprve levý podstrom pak vrchol pak pravý podstrom
+- Preorder: nejprve vrchol pak jde postupně do obou podstromů, O(n)
+- Postorder: nejprve do obou podstromů pak na vrchol samotný, O(n)
+- Inorder: nejprve levý podstrom pak vrchol pak pravý podstrom, O(n)
 <p align="center">
   <img src="nova_slozka/ppi.png" alt="PPI diagram" width="550">
 </p>
 
+```python
+class Vrchol:
+  def __init__(self, x = None):
+    self.info = x
+    self.levy = None
+    self.pravy = None
+
+  def preorder(self):
+    print(self.info)
+    if self.levy != None:
+      self.levy.preorder()
+    if self.pravy != None:
+      self.pravy.preorder()
+
+  def postorder(self):
+     if self.levy != None:
+      self.levy.postorder()
+    if self.pravy != None:
+      self.pravy.postorder()
+    print(self.info)
+
+  def inorder(self):
+    if self.levy != None:
+      self.levy.inorder()
+    print(self.info)
+    if self.pravy != None:
+      self.pravy.inorder()
+```
+Průchod do hloubky a šířky (po vrstvách) bez použití rekurze
+```python
+class Node:
+    def __init__(self, info, levy=None, pravy=None):
+        self.info = info
+        self.levy = levy
+        self.pravy = pravy
+
+def dfs_zasobnikem(koren):
+    zasobnik = [koren]
+
+    while zasobnik:
+        P = zasobnik.pop()
+        print(P.info)
+        if P.pravy is not None:
+            zasobnik.append(P.pravy)
+        if P.levy is not None:
+            zasobnik.append(P.levy)
+
+def bfs_frontou(koren):
+    fronta = deque([koren])
+
+    while fronta:
+        P = fronta.popleft()
+        print(P.info)
+        if P.levy is not None:
+            fronta.append(P.levy)
+        if P.pravy is not None:
+            fronta.append(P.pravy)
+```
+#### Obecný strom
+
+známe maximální stupeň větvění M, reprezentujeme podobně jako BS, ale v každém uzlu je M odkazů na syny
+
+v každém uzlu je uložen seznam odkazů na syny potřebné délky
+```python
+class Vrchol:
+  def __init__(self, x = None):
+    self.info = x
+    self.synove = []
+
+  def pruchod(self):
+    print(self.info)
+    for x in self.synove:
+      x.pruchod
+
+#reprezentace pomocí binárního stromu
+
+  def __init::(self, x = None):
+    self.info = x
+    self.syn = None
+    self.bratr = None
+```
+## Přednáška 7, Binární vyhledávací stromy, rekurzivní generování
+
+### Binární vyhledávací strom (BTS)
+
+datová struktura pro ukládání a vyhledávání dat podle klíče
+
+pro každý vrchol platí 
+- všechny záznamy v každém levém podstromu mají menších klíč
+- všechny záznamy v každém pravém podstromu mají větší klíč
+
+při procházení je výhoda, že můžeme projít jen cestu od kořene do listu, ne celý strom, časová složitost je tedy v nejhorším případě výška stromu
+
+výška BVS s n vrcholy
+- v nejlepším případě horní mez log<sub>2</sub>n
+- v nejhorším případě n
+
+hledání hodnoty v BVS
+```python
+def hledej(p, x):
+    while p != None and p.info != x:
+      if x < p.info:
+        p = p.levy
+      else:
+        p = p.pravy
+    return p
+
+#rekurzivní řešení
+
+def hledej(p, x):
+  if p == None:
+    return None
+  elif x == p.info:
+    return p
+  elif x < p.info:
+    return hledej(p.levy, x)
+  elif: x > p.info:
+    return hledej(p.pravy, x)
+```
+#### Přidání hodnoty do BVS
+
+novou hodnotu přidáváme do nového listu, stejně jako při hledání hodnoty BVS postupujeme dokud nenarazíme na None
+
+časová složitost v průměrném případě O(log n)
+
+realizace dvěma způsoby
+- udržujeme si pomocný ukazatel při průchodu od vrcholu do listu, podle něj pak připojíme nový uzel
+- řešení pomocí rekurze, které si ukážeme
+```python
+def pridej(p, x):
+  if p is None:
+    p = Vrchol(x)
+  elif x < p.info:
+    p.levy = pridej(p.levy, x)
+  elif x > p.info:
+    p.pravy = pridej(p.pravy, x)
+  return p
+```
+#### Vypuštění hodnoty z BVS
+
+průchodem od kořene k listům najdeme hledanou hodnotu a jeho předchůdce
+
+dále rozlišujeme případy
+- pokud je to list zruší se, v předchůdci nastavíme odkaz na None
+- pokud má jen jednoho následníka tak ho přepojíme místo něj
+- pokud má dva následníky vrchol se nemůže zrušit, smaže se dosavadní hodnota a nahradí se jinou
+
+časová složitost opět O(log n)
+```python
+class Vrchol:
+    def __init__(self, info, levy=None, pravy=None):
+        self.info = info
+        self.levy = levy
+        self.pravy = pravy
+
+def vypust(p, x):
+    if p is None:
+        return None
+    elif x < p.info:
+        p.levy = vypust(p.levy, x)
+    elif x > p.info:
+        p.pravy = vypust(p.pravy, x)
+    else:
+        # nalezený vrchol k odstranění
+        if p.levy is None and p.pravy is None:
+            return None  # případ 1: list
+        elif p.levy is None:
+            return p.pravy  # případ 2: pouze pravý podstrom
+        elif p.pravy is None:
+            return p.levy  # případ 2: pouze levý podstrom
+        else:
+            # případ 3: dva následníci – nalezneme nejmenší z pravého podstromu
+            nahrada = najdi_min(p.pravy)
+            p.info = nahrada.info
+            p.pravy = vypust(p.pravy, nahrada.info)
+    return p
+
+def najdi_min(p):
+    while p.levy is not None:
+        p = p.levy
+    return p
+```
+### Vyvážené stromy
+
+chceme zajistit výšku stromu O(log n)
+
+Dokonale vývážený strom
+- pro každý uzel platí
+  - počet uzlů v levém a pravém podstromu se liší maximálně o jeden
+- nejlepší možné vyvážení stromu s n uzly je horní mez log<sub>2</sub>n
+- snadno ho postavíme
+- těžké ho udržovat dokonale vyvážený, proto se často používá slabší definice vyváženosti
+```python
+def postav(n):
+  if n == 0:
+    return None
+  p = Vrchol()
+  p.levy = postav((n-1)//2)
+  p.pravy = postav(n-1 - (n-1)//2)
+  return p
+
+#hodnoty přidáme buď tak, že sestrojený strom procházíme metodou inorder a přiřazujeme hodnoty nebo hodnoty seřadíme vzestupně do listu "a" a rovnou ukládáme při sestrojení, jak ukázáno
+
+def strom(a, x, y):
+  if x > y:
+    return None
+  p = Vrchol(a[(x+y)//2])
+  p.levy = strom(a, x, (x+y)//2 - 1)
+  p.pravy = strom(a, (x+y)//2 + 1, y)
+  return p
+```
+Výškově vyvážený binární strom (AVL strom)
+- pro každý uzel platí
+  - výška jeho levého a pravého podstromu se liší maximálně o jeden
+- slabší požadavek na výšku, AVL strom je maximálně o 45% vyšší než dokonale vyvážený strom se stejným počtem uzlů
+- každý dokonale vyvážený strom je AVL stromem
+- AVL strom nemusí být dokonale vyvážený
+
+Realizace: v každém uzlu p je navíc uložena položka balance -1,0,1 která určuje jak se liší výška levého a právého podstromu uzlu, díky tomu můžeme hodnoty snadno odebírat i přidávat
+
+balance(p) = výška(p.levy) - výška(p.pravy)
+
+### Rekurzivní generování 
+
+vypsat všechna k-ciferná čísla v poziční soustavě o základu n
+
+Můžeme řešit:
+- pomocí dynamicky rostoucího seznamu
+- pomocí globálního pole pevné délky
+```python
+#pomocí dynamického sezamu
+k = 4  # počet cifer
+n = 3  # základ soustavy
+
+def generuj(c):
+    for i in range(n):
+        c.append(i)
+        if len(c) < k:
+            generuj(c)
+        else:
+            print(c)
+        c.pop()
+
+generuj([])
+
+#pomocí globálního pole
+
+k = 4  # počet cifer
+n = 3  # základ soustavy
+c = [0] * k  # pole pro výsledek
+
+def generuj(p):
+    for i in range(n):
+        c[p] = i
+        if p < k - 1:
+            generuj(p + 1)
+        else:
+            print(c)
+
+generuj(0)
+```
+Variace s opakováním
+
+k-prvkové z n-prvkové množiny{1, 2,...n}
+```python
+k = 2  # délka variace
+n = 4  # počet prvků v množině
+
+def variace(c):
+    for i in range(1, n + 1):
+        c.append(i)
+        if len(c) < k:
+            variace(c)
+        else:
+            print(c)
+        c.pop()
+
+variace([])
+```
+Kombinace bez opakování 
+
+k-prvkové z n-prvkové množiny{1, 2,...n}
+```python
+k = 3  # počet prvků v kombinaci
+n = 5  # z kolika prvků vybíráme
+c = [0] * (k + 1)  # vytvářená kombinace, c[0] slouží jako technický pomocník
+
+def kombinace(p):
+    if p > k:
+        print(c[1:])  # tiskneme až od indexu 1
+    else:
+        for i in range(c[p - 1] + 1, n - (k - p) + 2):
+            c[p] = i
+            kombinace(p + 1)
+
+kombinace(1)
+```
+Doplnění znamének
+
+je dáno n kladných celých čísel a požadovaný součet c
+
+Před čísla doplňte znaménka + nebo - tak, aby byl součet čísel se
+znaménky roven danému c, nalezněte všechna řešení
+
+před každé číslo dáme postupně +/- po vytvoření n-tice znamének testujeme součet
+
+časová složitost O(2<sup>n</sup>), máme 2<sup>n</sup> možností
+```python
+cislo = [int(_) for _ in input().split()]  # uložení zadaných čísel
+n = len(cislo)  # počet zadaných čísel
+c = int(input())  # požadovaný výsledný součet
+znam = [None] * n  # uložení znamének
+
+def znamenko(p, soucet):  # p = pozice nového znaménka, součet = součet přechozích čísel se znaménky
+    if p == n:
+        if soucet == c:
+            for i in range(n):
+                print(znam[i], end='')
+                print(cislo[i], end='')
+            print()
+    else:
+        znam[p] = '+'
+        znamenko(p + 1, soucet + cislo[p])
+        znam[p] = '-'
+        znamenko(p + 1, soucet - cislo[p])
+
+znamenko(0, 0)  # zavolání rekurzivní funkce – začínáme od indexu 0, dosavadní součet je 0
+```
+Rozklad čísla 
+
+Zadané kladné celé číslo n rozložte všemi různými způsoby na
+součet kladných celých sčítanců
+
+Rozklady lišící se pouze pořadím sčítanců nepovažujeme za různé
+```python
+n = 7
+a = [n + 1] * (n + 1)  # prvek a[0] není součástí rozkladu
+
+def rozklad(z, p):  # z - kolik zbývá rozložit, p - kolikátý sčítanec vytváříme
+    if z == 0:  # rozklad je hotov
+        print(a[1:p])
+    else:  # přidáme do a[p] p-tý člen rozkladu
+        for i in range(1, min(z, a[p - 1]) + 1):
+            a[p] = i
+            rozklad(z - i, p + 1)
+
+rozklad(n, 1)  # rozložit "n", začínáme 1. sčítancem
+```
+## Přednáška 8, Grafy - reprezentace, procházení
 
 
 
 
 
 
+
+    
 
 
