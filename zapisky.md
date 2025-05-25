@@ -1484,7 +1484,486 @@ typy grafů
 - graf ohodnocený (heanově, vrcholově)
 - multigraf
 
-počet hran v grafu minmálně 0, maximálně $\frac{n(n-1)}{2}$
+počet hran v grafu minmálně 0, maximálně $\frac{n (n-1)}{2}$
+
+v grafu
+- sled: z vrcholu x do y, libovolné opakování hran i vrcholů
+- tah: z vrcholu x do y, hrany se neopakují
+- cesta: z vrcholu x do y, neopakují se hrany ani vrcholy
+- vzdálenost: nejkratší cesta mezi 2 vrcholy
+
+graf je souvislý pokud mezi každými 2 vrcholy existuje cesta
+
+komponenta souvislosti je maximální souvislá část grafu
+
+Strom je souvislý neorientovaný graf neobsahující cykly, n-1 hran
+
+Les je graf jehož komponenty jsou stromy
+
+Kostra grafu je souvislý podgraf obsahující všechny vrcholy a co nejméně hran (kostra je strom)
+
+Bipartitní graf má vrcholy, které jde rozdělit do 2 skupin, tak že nemají hranu mezi sebou jen do druhé skupiny
+
+Acyklický orientovaný graf neobsahuje žádný orientovaný cyklus
+
+Topologické uspořádání orientovaného grafu je očíslování vrcholů tak, že pro každou hranu i -> j platí i < j
+
+### Reprezentace grafu v programu
+
+#### Matice sousednosti
+
+čtvercová matice velikosti n x n
+
+a[i][j] = 0/1 <==> neexistuje/exituje hrana(i,j)
+
+pro typy grafů
+- neorientovaný: symetrická matice
+- orientovaný: obecně není symetrická
+- ohodnocený: a[i][j] = ohodnocení hrany (i,j) -> matice délek hran
+
+Vhodné použití
+- malé grafy s velkým počtem hran
+
+Nevhodné použití
+- graf s hodně vrcholy a málo hranami
+
+#### Seznamy následníků
+
+u každého vrcholu je uložen seznam sousedních vrcholů
+
+typy grafů
+- primárně pro orientované grafy
+- u neorientovaných dvojice orientovaných hran
+- u ohodnoceného se ukládá i hodnota hrany
+
+Realizace
+- pole n seznamů
+- matice n x (n-1) --> oproti matici sousednosti šetří čas, paměť nikoliv
+- matice n x r, pokud víme, že z každého vrcholu maximálně r hran
+
+#### Seznam hran
+
+jednorozměrné pole nebo seznam délky m 
+
+každý záznam odpovídá jedné hraně grafu, uložena čísla koncových vrcholů
+
+Vhodné použití
+- algoritmy založené na postupné zpracování všech hran grafu
+
+Nevhodné použití
+- pro algoritmy vyžadující určení všech sousedů vrcholu
+
+#### Matice incidence
+
+matice velikosti m x n (hrany x vrcholy)
+
+neorientovaný graf
+- A[h][u] = 0  <==> vrchol u neleží na hraně h
+- A[h][u] = 1  <==> vrchol u leží na hraně h
+
+orientovaný graf
+- A[h][u] = +1  <==> hrana h vede z vrcholu u
+- A[h][u] = -1  <==> vrchol u leží na hraně u
+
+ohodnocený graf
+- A[h][u] přímo udává ohodnocení hrany
+
+Použití
+- pro řídké grafy (méně hran než vrcholů), jinak neefektivní paměťově i časově
+- především v teorii grafů pro důkazy
+
+#### Dynamická reprezentace
+
+netypická, vrchol grafu je objekt v němž je uložen seznam odkazů na sousední vrcholy
+
+datově stejné jako obecná reprezentace stromu, odpovídá orientovanému grafu
+
+neorientovaná hrana se reprezentuje dvojicí orientovaných hran vedoucích oběma směry
+
+v případě ohodnoceného grafu se do záznamu přidá položka, která představuje ohodnocení hrany
+
+na rozdíl od stromu nemá graf kořen a nemusí být souvislý
+
+### Procházení grafu do hloubky (DFS)
+
+stejný postup jako u binárních a obecných stromů, jen musíme kontrolovat již navštívené vrcholy
+
+každému vrcholu tedy navíc přiřazujeme False (nenavstiveno) nebo True (navstiveno)
+
+časová složitost
+- při reprezentaci maticí sousednosti: O(N<sup>2</sup>)
+- při reprezentaci seznamů následníků: O(N+M)
+```python
+#pomocí rekurze
+
+navstiven = [False] * n
+
+def pruchod_dfs(v):
+  navstiven[v] = True
+  zpracuj_vrchol(v)    #provede požadovanou akci
+  for u in sousede(v, u):
+    if not navstiven[u]:
+      Pruchod(u)
+Pruchod(s)
+
+#pomocí zásobníku
+
+navstiven = [False] * n
+navstiven[s] = True
+zasob = [s]
+
+while len(zasob) > 0:
+  v = zasob.pop()
+  zpracuj_vrchol(v)   #provede požadovanou akci
+  pro všechny hrany (v,u):   #pro všechny hrany (v, u)
+    if not navstiven[u]:
+      navstiven[u] = True
+      zasob.append(u)
+```
+### Procházení grafu do šířky (BFS)
+
+stejný postup jako u binárních a obecných stromů, jen musíme kontrolovat již navštívené vrcholy
+
+místo zásobníků používáme frontu 
+
+časová složitost
+- při reprezentaci maticí sousednosti: O(N<sup>2</sup>)
+- při reprezentaci seznamů následníků: O(N+M)
+```python
+#pomoci rekurze
+
+from collections import deque
+
+navstiven = [False] * n
+
+def pruchod_bfs(s):
+  fronta = deque()
+  fronta.append(s)
+  navstiven[s] = True
+
+  while fronta:
+    v = fronta.popleft()
+    zpracuj_vrchol(v)  #provede požadovanou akci
+    for u in sousede[v]:  #pro všechny hrany (v, u)
+      if not navstiven[u]:
+        navstiven[u] = True
+        fronta.append(u)
+
+pruchod_bfs(s)
+
+#pomocí fronty
+
+navstiven = [False] * n
+navsticen[s] = True
+fronta = [s]
+
+while len(fronta) > 0:
+  v = fronta.pop(0)
+  zpracuj _vrchol  #provede požadovanou akci
+  for u in sousede[v]  #pro všechny hrany (v, u)
+    if not navstiven[u]:
+      navstiven[u] = True
+      fronta.append(u)
+```
+### Základní grafové problémy
+
+pro neorientované, neohodnocené grafy
+- souvislost grafu, řešíme DFS/BFS
+- určit komponenty souvislosti, řešíme DFS/BFS
+- obsahuje graf cyklus / je strom, řešíme DFS/BFS
+- určit kostru (libovolnou), řešíme DFS/BFS
+- bipartitnost grafu, řešíme DFS/BFS
+- délka nejkratší cesty mezi x a y, řešíme BFS
+- nalézt nejkratší cestu, řešíme BFS i zpětný chod
+
+#### Souvislost grafu
+
+provedeme DFS/BFS a u každého vrcholu připočteme do globálního počítadla +1, pokud se nakonci rovná počtu vrcholů je souvislý
+```python
+#prochazeni do sirky
+
+from collections import deque
+
+def je_souvisly_bfs(sousede, start):
+    n = len(sousede)
+    navstiven = [False] * n
+    fronta = deque()
+    fronta.append(start)
+    navstiven[start] = True
+    pocet = 1
+
+    while fronta:
+        v = fronta.popleft()
+        for u in sousede[v]:
+            if not navstiven[u]:
+                navstiven[u] = True
+                fronta.append(u)
+                pocet += 1
+    return pocet == n
+
+#prochazeni do hloubky
+
+def je_souvisly_dfs(sousede, start):
+    n = len(sousede)
+    navstiven = [False] * n
+    pocet = 0
+
+    def dfs(v):
+        nonlocal pocet
+        navstiven[v] = True
+        pocet += 1
+        for u in sousede[v]:
+            if not navstiven[u]:
+                dfs(u)
+
+    dfs(start)
+    return pocet == n
+```
+#### Všechny komponenty souvislosti
+
+opakovaně procházíme graf vždy z nějakého nenavštíveného vrcholu dokud nenavštívíme všechny, při tom počítáme komponenty
+
+časová složitost
+- při reprezentaci maticí sousednosti: O(N<sup>2</sup>)
+- při reprezentaci seznamů následníků: O(N+M)
+```python
+navstiven = [0] * n
+komponenta = 0
+pocet_navstivenych = 0
+
+def pruchod(v):
+  global pocet_navstivenych
+  pocet_navstivenych += 1
+  for u in sousede[v]:
+    if navstiven[u] == 0:
+      navstiven[u] = navstiven[v]
+      Pruchod(u)
+
+while pocet_navstivenych < n:
+  komponenta += 1
+  s = nenavstiveny_vrchol()
+  navstiven[s] = komponenta
+  Pruchod(s)
+
+#jak vypada cely kod pomoci dvourozměrného pole a fronty
+
+from collections import deque
+
+n = int(input())
+m = int(input())
+
+graf = [[] for _ in range(n + 1)]
+
+for _ in range(m):
+    a, b = map(int, input().split())
+    graf[a].append(b)
+    graf[b].append(a)
+
+navstiveno = [False] * (n + 1)
+
+def bfs(start):
+    komponenta = []
+    q = deque()
+    q.append(start)
+    navstiveno[start] = True
+
+    while q:
+        vrchol = q.popleft()
+        komponenta.append(vrchol)
+        for soused in graf[vrchol]:
+            if not navstiveno[soused]:
+                navstiveno[soused] = True
+                q.append(soused)
+    return komponenta
+
+for vrchol in range(1, n + 1):
+    if not navstiveno[vrchol]:
+        komp = bfs(vrchol)
+        print(" ".join(map(str, komp)))
+```
+#### Existence cyklu
+
+
+provede DFS/BFS celým grafem přes všechny komponenty, pokud při zpracování narazíme na hranu do již dříve navštíveného vrcholu našli jsme cyklus
+
+problém je hrana ze které jsme přisli
+
+časová složitost
+- při reprezentaci maticí sousednosti: O(N<sup>2</sup>)
+- při reprezentaci seznamů následníků: O(N+M)
+```python
+navstiven = [0] * n
+komponenta = 0
+pocet_navstivenych = 0
+ma_cyklus = False
+
+def nenavstiveny_vrchol():
+    for i in range(n):
+        if navstiven[i] == 0:
+            return i
+    return None
+
+def pruchod(v, rodic):
+    global pocet_navstivenych, ma_cyklus
+    pocet_navstivenych += 1
+    for u in sousede[v]:
+        if navstiven[u] == 0:
+            navstiven[u] = navstiven[v]
+            pruchod(u, v)
+        elif u != rodic:
+            # Už navštívený vrchol, který není rodičem -> cyklus
+            ma_cyklus = True
+
+while pocet_navstivenych < n:
+    komponenta += 1
+    s = nenavstiveny_vrchol()
+    navstiven[s] = komponenta
+    pruchod(s, -1)
+```
+#### Kostra
+
+provedeme DFS/BFS průchod a pokud narazíme na hranu vedoucí do již navštíveného vrcholu nebudeme si ji všímat
+
+časová složitost
+- při reprezentaci maticí sousednosti: O(N<sup>2</sup>)
+- při reprezentaci seznamů následníků: O(N+M)
+```python
+navstiven = [0] * n
+komponenta = 0
+pocet_navstivenych = 0
+kostra = []  # sem budeme ukládat hrany kostry jako (v, u)
+
+def nenavstiveny_vrchol():
+    for i in range(n):
+        if navstiven[i] == 0:
+            return i
+    return None
+
+def pruchod(v):
+    global pocet_navstivenych
+    pocet_navstivenych += 1
+    for u in sousede[v]:
+        if navstiven[u] == 0:
+            navstiven[u] = navstiven[v]
+            kostra.append((v, u))  # tato hrana patří do kostry
+            pruchod(u)
+
+while pocet_navstivenych < n:
+    komponenta += 1
+    s = nenavstiveny_vrchol()
+    navstiven[s] = komponenta
+    pruchod(s)
+
+print("Hrany kostry:")
+for (v, u) in kostra:
+    print(f"{v} - {u}")
+```
+#### Bipartitnost grafu
+
+provedeme BFS/DFS průchod přes všechny komponenty, nerozlišujeme čísla komponent, navštívené vrcholy značíme 1 a -1, tyto hodnoty v seznamu navstiven určují rozdělení vrcholů, pokud narazíme na hranu vedoucí na stejné číslo pak není bipartitní
+
+časová složitost
+- při reprezentaci maticí sousednosti: O(N<sup>2</sup>)
+- při reprezentaci seznamů následníků: O(N+M)
+```python
+import sys
+
+navstiven = [0] * n
+pocet_navstivenych = 0
+
+def nenavstiveny_vrchol():
+    for i in range(n):
+        if navstiven[i] == 0:
+            return i
+    return None
+
+def Pruchod(v):
+    global pocet_navstivenych
+    pocet_navstivenych += 1
+    for u in sousede[v]:
+        if navstiven[u] == 0:
+            navstiven[u] = -navstiven[v]
+            Pruchod(u)
+        elif navstiven[u] == navstiven[v]:
+            print('Graf není bipartitní')
+            sys.exit()  # ukončení výpočtu
+
+while pocet_navstivenych < n:
+    s = nenavstiveny_vrchol()
+    navstiven[s] = 1
+    Pruchod(s)
+
+print('Graf je bipartitní')
+print('Rozdělení vrcholů:', navstiven)
+```
+#### nejkratší vzdálenost v grafu
+
+provedme BFS průchod z výchozího vrcholu s hodnotou 0, zbytek má -1
+
+každému navštívenému dáme hodnotu o 1 větší než je hodnota vrcholu, ze kterého přicházíme
+
+výsledné hodnoty udávají vzdlenosti od výchozího vrcholu
+
+časová složitost
+- při reprezentaci maticí sousednosti: O(N<sup>2</sup>)
+- při reprezentaci seznamů následníků: O(N+M)
+```python
+navstiven = [-1] * n
+navstiven[s] = 0
+fronta = [s]
+
+while len(fronta) > 0:
+    v = fronta.pop(0)
+    for u in sousede[v]:
+        if navstiven[u] == -1:
+            navstiven[u] = navstiven[v] + 1
+            fronta.append(u)
+
+print(navstiven)
+# vzdálenosti všech vrcholů od počátečního vrcholu
+```
+#### nejkratší cesta v grafu
+
+hledáme nejkratší cestu z A do B
+
+dvě fáze
+- algoritmus vlny: BFS průchod a použijeme předchozí úlohu, navíc ke každému vrcholu přidáváme číslo jeho předchůdce na nejkratší cestě
+- zpětný chod: rekonstrukce cesty odzadu pomocí zaznamenaných předchůdců
+
+pokud existuje více nejkratších cest algoritmus určí jednu z nich
+
+časová složitost
+- při reprezentaci maticí sousednosti: O(N<sup>2</sup>)
+- při reprezentaci seznamů následníků: O(N+M)
+```python
+# algoritmus vlny
+
+navstiven = [-1] * n
+navstiven[A] = 0
+predchudce = [0] * n
+fronta = [A]
+
+while navstiven[B] == -1:  #neprisli jsme do B
+    v = fronta.pop(0)
+    for u in sousede[v]:
+        if navstiven[u] == -1:
+            navstiven[u] = navstiven[v] + 1
+            predchudce[u] = v
+            fronta.append(u)
+
+# zpetny chod
+
+cesta = [B]
+v = B
+while v != A:
+    v = predchudce[v]
+    cesta.append(v)
+
+print(list(reversed(cesta)))
+```
+## Přednáška 9, Grafové algoritmy
+
+
 
 
 
