@@ -2032,6 +2032,57 @@ pokud přidáme seznam vrcholů, které nemají předchůdce (mají v poli hodno
 - vyřadíme hrany z něj vedoucí, snížíme údaj v původním poli a pokud hodnota klesne na 0 zařadíme do pomocného pole O(M)
 - proběhne max N-krát O(N)
 
+úloha na topologické uspořádání v grafu pomocí rekurze a DFS
+```python
+def topologicke_usporadani_dfs(n, hrany):
+    graf = [[] for _ in range(n)]
+    for u, v in hrany:
+        graf[u].append(v)
+
+    navstiven = [False] * n
+    vysledek = []
+
+    def dfs(v):
+        navstiven[v] = True
+        for u in graf[v]:
+            if not navstiven[u]:
+                dfs(u)
+        vysledek.append(v)
+
+    for i in range(n):
+        if not navstiven[i]:
+            dfs(i)
+
+    return vysledek[::-1]
+```
+pomocí očíslování
+```python
+from collections import deque
+
+def topologicke_usporadani(n, hrany):
+    graf = [[] for _ in range(n)]
+    vstupni_stupen = [0] * n
+
+    for u, v in hrany:
+        graf[u].append(v)
+        vstupni_stupen[v] += 1
+
+    fronta = deque([i for i in range(n) if vstupni_stupen[i] == 0])
+    vysledek = []
+
+    while fronta:
+        v = fronta.popleft()
+        vysledek.append(v)
+        for u in graf[v]:
+            vstupni_stupen[u] -= 1
+            if vstupni_stupen[u] == 0:
+                fronta.append(u)
+
+    if len(vysledek) != n:
+        raise ValueError("Graf obsahuje cyklus")
+
+    return vysledek
+```
 ### Ohodnocené grafy
 
 omezíme se na hranové ohodnocení
@@ -2071,7 +2122,42 @@ def quicksort(s):
 ```
 ## Přednáška 11, Minimax
 
-Algoritmus minimax 
+### Algoritmus minimax 
+
+Algoritmus
+- hodnota uzlu, kde je na tahu bílý = maximum z hodnot jeho synů
+- hodnota uzlu kde je na tahu černý = minimum z honot jeho synů
+- strom hry se ohodnocuje od listů zdola nahoru po vrstvách a očítají se střídavě maxima a minima
+
+Programová realiazce
+- prohledáváme do hloubky DFS
+- používáme minimax agoritmus, na hladinách se hodnoty počítají střídavě jako minimum a maximum ze synů
+
+#### zrychlení, ořezání 
+
+ztrátové
+- po několika málo vrstvách provedeme ohodnocení a nejhorší pozice odmítneme
+
+alfa-beta prořezávání/bezztrátové
+- prořezávání se provádí při jednom průchodu pro oba hráče
+
+## Přednáška 12, Dynamické programování
+
+rozklad úlohy na menší podúlohy stejného charakteru
+
+rozdíl s "rozděl a panuj" je, že podúlohy nemusí být navzájem nezávislé
+
+Úlohy typu 
+- najít nejlepší způsob
+- určit počet způsobů
+
+dvě možnosti
+- shora: rekurzivní rozklad shora do pomocného pole a přitom ukládáme již spočítané hodnoty pro zamezení opakování výpočtů (memoizace, chytrá rekurze)
+- zdola: postupujeme od elementárních úloh ke složitějším a výsledky podúloh si ukládáme
+
+potřebujeme více paměti za méně času
+
+
 
 
 
