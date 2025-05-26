@@ -1963,6 +1963,119 @@ print(list(reversed(cesta)))
 ```
 ## Přednáška 9, Grafové algoritmy
 
+### Faktorové množiny 
+
+jiný postup při řešení grafových problémů 1-4 
+
+datová struktura
+- Disjoint-Find-Union (DFU)
+- Union-Find
+- Disjoint-Sets
+
+rozdělení množiny prvků na disjunktní části
+
+nejjednodušší implementace, O(N)
+```python
+#graf je bez hran, každý vrchol ve své faktorové množině
+faktor = [i for i in range(n)]
+
+#určení čísla faktorové množiny v
+faktor[v]
+
+#sjednocení faktorových množin
+x = faktor[v]
+for i in range(n):
+  if faktor[i] == x:
+    faktor[i] = faktor[u]
+```
+#### Souvislost grafu, komponenty souvislosti
+
+časová složitost O(N<sup>2</sup>)
+```python
+faktor = [i for i in range(n)]
+pocet komponent = n
+
+for j in sousede[v]:    #pro všechny hrany(v,u)
+  if faktor[v] != faktor[u]:
+    pocet komponent -= 1
+    x = faktor[v]
+    for i in range(n):
+      if faktor[i] == x:
+        faktor[i] = faktor[u]
+    if pocet_komponent == 1: break
+
+print("pocet komponent:", pocet_komponent)
+print("komponenty souvislosti:", faktor)
+```
+### Topologické třídění 
+
+Algoritus sloužící k nalezení topologického uspořádání, neboli očíslování vrcholů takové, že pro každou hranu i -> j platilo i < j
+
+Topologické uspořádání existuje pokud v grafu není cyklus a nemusí být jednoznačné
+
+Algoritmus
+- zvolíme vrchol bez předchůdců, musí existovat, protože graf je acyklický
+- zvolenému vrcholu přiřadíme nejbližší volné pořadové číslo v topologickém uspořádání a tento vrchol vypustíme i s jeho hranami
+- dostaneme graf menší o jeden vrchol, na který aplikujeme stejný postup
+
+Realizace
+- graf uložen pomocí seznamu následníků
+- pomocné pole indexované čísly 1-N, kde pro každý vrchol je uložen počet předchůdců
+
+časová složitost O(N<sup>2</sup>)
+
+pokud přidáme seznam vrcholů, které nemají předchůdce (mají v poli hodnotu 0), implementujeme zásobníkem
+
+časová složitost O(N + M)
+- vybereme vrchol bez předchůdce z pomocného seznamu O(1)
+- vrchol vyřadíme, vložíme -1 do původního pole a vyřadíme ho i z pomocného O(1)
+- vyřadíme hrany z něj vedoucí, snížíme údaj v původním poli a pokud hodnota klesne na 0 zařadíme do pomocného pole O(M)
+- proběhne max N-krát O(N)
+
+### Ohodnocené grafy
+
+omezíme se na hranové ohodnocení
+
+#### Nejkratší cesta v ohodnocené grafu
+
+podobný postup jako procházení do šířky v neohodnoceném grafu, jen se vlna šíří podle daného ohodnocení 
+
+## Přednáška 10, Rozděl a panuj
+
+### Rozděl a panuj
+
+metoda rekurzivního návrhu algoritmu
+
+problém se rozdělí na dva podproblémy stejného typu, ale menší velikosti
+
+### Quick sort 
+
+Realizace
+- v seznamu zvolíme jeden prvek, třeba uprostřed tzv. pivot
+- prvky rozdělíme na menší, větší a rovné pivotu
+- zvlášť ty menší a větší setřídíme rekurzivním voláním tohoto algoritmu
+- rekurze končí u úseku délky 1
+
+složitost
+- prostorová v nejhorším případě O(N)
+- časová průměrně O(n log n) nejhůře O(N<sup>2</sup>)
+```python
+def quicksort(s):
+  if len(s) <= 1:
+    return s
+  x = s[len(s)//2]
+  vlevo = [ a for a in s if a < x ]
+  vpravo = [ a for a in s if a > x ]
+  stred = [ a for a in s if a == x ]
+  return quicksort(vlevo) + stred + quicksort(vpravo)
+```
+## Přednáška 11, Minimax
+
+Algoritmus minimax 
+
+
+
+
 
 
 
