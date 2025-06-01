@@ -1973,6 +1973,10 @@ datová struktura
 - Disjoint-Sets
 
 rozdělení množiny prvků na disjunktní části
+- rozdělujeme množinu všech vrcholů grafu, postupně vytváříme komponenty
+- na začátku máme graf bez hran
+- hrany přidáváme a spojujeme faktory
+- vhodná reprezentace grafu je seznam hran
 
 nejjednodušší implementace, O(N)
 ```python
@@ -1989,6 +1993,12 @@ for i in range(n):
     faktor[i] = faktor[u]
 ```
 #### Souvislost grafu, komponenty souvislosti
+
+do grafu postupně přidáváme hrany ve struktuře DFU a evidujeme čísla faktorových množin vrcholů
+
+po skončení je v poli faktor rozdělení vrcholů do komponent
+
+výpočet jde ukončit, když počet komponent klesne na 1 (graf je souvislý)
 
 časová složitost O(N<sup>2</sup>)
 ```python
@@ -2007,6 +2017,112 @@ for j in sousede[v]:    #pro všechny hrany(v,u)
 print("pocet komponent:", pocet_komponent)
 print("komponenty souvislosti:", faktor)
 ```
+#### existence cyklu v neorientovaném grafu
+
+provádíme stejný algoritmus, pokud narazíme na hranu spojující vrcholy z téže faktorové množiny, našli jsme cyklus
+```python
+faktor = [i for i in range(n)]  # každý vrchol je nejprve samostatná komponenta
+cyklus = False
+
+for v in range(n):
+    for u in sousede[v]:
+        if v < u:  # aby se každá hrana brala jen jednou (neorientovaný graf)
+            if faktor[v] == faktor[u]:
+                cyklus = True
+                break
+            else:
+                x = faktor[v]
+                for i in range(n):
+                    if faktor[i] == x:
+                        faktor[i] = faktor[u]
+    if cyklus:
+        break
+
+if cyklus:
+    print("Graf obsahuje cyklus")
+else:
+    print("Graf je bez cyklů (les)")
+```
+
+#### kostra souvislého grafu
+
+provádíme stejný algoritmus, kdykoliv narazíme na hranu spojující dva vrcholy z různých faktorových množin, zařadíme tuto hranu do vytvářené kostry 
+```python
+faktor = [i for i in range(n)]  # každý vrchol je samostatná komponenta
+kostra = []  # seznam hran tvořících kostru
+
+for v in range(n):
+    for u in sousede[v]:
+        if v < u:  # zpracováváme každou neorientovanou hranu jen jednou
+            if faktor[v] != faktor[u]:
+                kostra.append((v, u))  # přidáme hranu do kostry
+                x = faktor[v]
+                for i in range(n):
+                    if faktor[i] == x:
+                        faktor[i] = faktor[u]
+
+print("Hrany kostry:", kostra)
+```
+#### Jiná implementace struktury DFU - převrácené stromy
+
+každá faktorová množina je reprezentována jedním orientovaných stromem s orintací hran směrem nahoru
+
+kořen odkazuje na sebe a ostatní uzly vždy na svého otce
+
+implementujeme v poli faktor pomocí indexů, faktor[v] = index otce prvku v 
+
+inicializace
+- graf je bez hran, každý vrchol ve své faktorové množině (1)
+- určení čísla faktorové množiny pro vrchol v (2)
+- sjednocení faktorových množin, v kterých leží v,u, kořen jednoho stromu se stane synem kořene druhého (3)
+
+časová složitost O(N.M)
+- v nejhorším případě strom degeneruje do seznamu délky N
+- zpracováváme M hran grafu
+```python
+# Inicializace: každý vrchol je ve své vlastní množině
+faktor = [i for i in range(n)]
+
+# Najdi kořen množiny pro prvek v
+def najdi(v):
+    while faktor[v] != v:
+        v = faktor[v]
+    return v
+
+# Sjednocení množin obsahujících prvky v a u
+def sjednot(v, u):
+    koren_v = najdi(v)
+    koren_u = najdi(u)
+    if koren_v != koren_u:
+        faktor[koren_u] = koren_v  # kořen u se stane potomkem kořene v
+
+```
+### Vyrovnání výšek stromů
+
+zvýšení efektvity u předchozí varianty, při sjednocování stromů se kořen stromu s menší výškou stane synem kořene stromu s větší výškou
+
+potřeba evidence výšky stromu v každém kořenu a aktualizovat při sjednocení 
+
+stromy si udržují logaritmickou výšku 
+
+časová složitost O(M log n)
+
+další možnosti zvýšení efektivity
+- místo výšek stromů použít velikost stromů neboli počet vrcholů
+- průběžné zkracování cest ve stromech
+
+#### Topologické uspořádání orientovaného grafu
+
+ Topologické uspořádání orientovaného grafu je očíslování vrcholů, tak že pro každou hranu i -> j platí i<j
+
+ algoritmus založený na postupném odebírání těch vrcholů, do nichž nevede žádná hrana - topologické třídění
+
+#### acykličnost orientovaného graf
+
+neobsahuje žádný orientovaný cyklus 
+
+stejný algoritmus jak v předchozím problému, snažíme se topologicky uspořádat
+
 ### Topologické třídění 
 
 Algoritus sloužící k nalezení topologického uspořádání, neboli očíslování vrcholů takové, že pro každou hranu i -> j platilo i < j
@@ -2087,11 +2203,176 @@ def topologicke_usporadani(n, hrany):
 
 omezíme se na hranové ohodnocení
 
+#### Minimální kostra grafu
+
+použijeme stejný algoritmus jako při hledání kostry v neohodnoceném grafu pomocí faktorových množin
+
+hrany seřadíme vzestupně podle jejich ohodnocení a procházíme je pak od nejkratší po nejdelší (hladový algoritmus)
+
+Kruskalův algoritmus O(N<sup>2</sup> log n)
+- seřazení hran O(M log m) = O(N<sup>2</sup> log n)
+- hledání kostry O(N<sup>2</sup>)
+
+Jarníkův algoritmus O(N.M)
+- libovolný výchozí vrchol, z nějž se rozrůstá strom
+- vybíráme hranu s nejmenším ohodnocením vedoucí z již sestrojené části kostry do zbytku grafu
+
+Borůvkův algoritmus O(M log n)
+- postupně spojuje vytvářené stromy
+- na začátku máme jednovrcholové stromy bez hran
+- pro každý strom vybereme hranu s nejmenším ohodnocením, která vede ven a všechny hrany přidáme do kostry
+- opakujeme dokud nezbyde jediný strom
+
 #### Nejkratší cesta v ohodnocené grafu
 
 podobný postup jako procházení do šířky v neohodnoceném grafu, jen se vlna šíří podle daného ohodnocení 
 
-## Přednáška 10, Rozděl a panuj
+## Přednáška 10, Prohledávání st. p. do hloubky, minimax
+
+### Prohledávání stavového prostoru do hloubky 
+
+DFS (depth-first search), backtracking
+
+stavový prostor je množina všech stavů, v nichž se může daný systém nacházet 
+
+počáteční stav, přechody mezi stavy, koncové stavy
+
+orientovný graf
+- vrcholy: stavy
+- hrany: přechody mezi stavy
+
+průběh prohledávání
+- začínáme v zadaném výchozím stavu systému
+- vytvoříme seznam předchůdců do nových stavů (a nějak seřadíme)
+- postupně zkoušíme všechny varianty pokračování, dokud nenajdeme řešení úlohy
+- je-li zvolená cesta neúspěšná, vrátíme se a zkoušíme znovu
+- to se opakuje v každém kroku, kde je více možností pokračování
+
+postup jako při procházení binárního stromu a grafu do hloubky, pozor na zacyklení u grafu 
+
+stejná je implementace algoritmu
+- rekurzivní funkce zpracovávájící aktuální stav a volá se rekurzivně na následující stavy
+- zásobník na uložení stavů, které jsme navštívili, ale ještě nezpracovali
+
+Proskákání koně na šachovnici
+- dána výchozí pozice
+- úkol je projít s ním postupně všechna pole na šachovnici a žádné nenavštívit dvakrát
+- v každé pozici zkoušíme koněm udělat tah na všechna dosud nenavštívená pole
+
+prostorová složitost 
+- výška stromu představující možné cesty výpočtu
+- kořen: výchozí stav
+- list stromu: nalezené řešení nebo slepá ulička
+- obvykle rozumně velká
+
+časová složitost 
+- počet uzlů ve stromu představující všechny možné cesty výpočtu
+- obvykle exponenciální vzhledem k výšce stromu
+- zlepšení času: ořezávání
+```python
+n = 8    #rozměr šachovnice
+s = [[-1]*(n+1) for _ in range(n+1)]  #vzdálenost pole od startu
+
+#všechny možnosti kam kůň může doskákat
+tah = ((1,2), (2,1), (2,-1), (1,-2), (-1,-2), (-2,-1), (-2,1), (-1,2)
+
+start1, start2 = [int(_) for input("Start: ").split()]
+s[start1][start2] = 0
+celkem_kroku = n * n - 1
+
+if cesta(s, start1, start2):
+  for i in range(1, n+1):
+    for j in range(1, n+1):
+      print(f"{s[i][j]:3}", end="")
+else:
+  print("cesta neexistuje")
+
+def cesta(s, i1, i2):
+  krok = s[i1][i2] + 1
+  for smer in range(len(tah)): #zkousime smery tahu kone
+    j1 = i1 + tah[smer][0]
+    j2 = i2 + tah[smer][1]
+    if j1 >= 1 and j1 <= n and j2 >= 1 and j2 <= n:
+      if s[j1][j2] == -1:
+        s[j1][j2] = krok
+        if krok == celkem_kroku:
+          return True
+        if cesta(s, j1, j2):
+          return True
+        else:
+          s[j1][j2] = -1
+  return False
+```
+#### Ořezávání
+
+během procházení procházíme stav do hloubky a v každém stavu průběžne vyhodnocujeme situaci, pokud nemůže vést k řešení odřízneme celý podstrom a neprocházíme ho
+
+Příklad: Osm dam na šachovnici
+
+úkol je rozmístit na šachovnici 8 dam, tak aby se neohrožovali
+
+počet možností
+- bez ořezávání: zkoušet všechny výběry 8 polí z 64 (4 miliardy)
+- základní ořezávání: na každém řádku právě jedna dáma, po umístění testovat kolize (16 milionů)
+- lepší ořezávání: hned při umístění dámy testovat kolize s předešlími dámami (92)
+```python
+n = 8
+a = [[False]án for _ in range(n)]
+
+def vypis():
+  for i in range(n):
+    for j in range(n):
+      if a[i][j]:
+        print("*", end=" ")
+      else:
+        print(".", end=" ")
+    print(end="/n")
+  print(end="/n)
+
+def kolize(r, s):
+  for i in range(r):
+    if a[i][s]:
+      return True
+
+  i = r-1; j = s-1
+  while i >= 0 and j < n:
+    if a[i][j]:
+      return True
+    i -= 1; j += 1
+  return False
+
+def dama(r):
+  for j in range(n):
+    a[r][j] = True
+    if not kolize(r, j):
+      if r < n-1:
+        dama(r+1)
+      else:
+        vypis()
+    a[r][j] = False
+
+dama(0)
+```
+### Algoritmus minimax 
+
+Algoritmus
+- hodnota uzlu, kde je na tahu bílý = maximum z hodnot jeho synů
+- hodnota uzlu kde je na tahu černý = minimum z honot jeho synů
+- strom hry se ohodnocuje od listů zdola nahoru po vrstvách a očítají se střídavě maxima a minima
+
+Programová realiazce
+- prohledáváme do hloubky DFS
+- používáme minimax agoritmus, na hladinách se hodnoty počítají střídavě jako minimum a maximum ze synů
+
+#### zrychlení, ořezání 
+
+ztrátové
+- po několika málo vrstvách provedeme ohodnocení a nejhorší pozice odmítneme
+
+alfa-beta prořezávání/bezztrátové
+- prořezávání se provádí při jednom průchodu pro oba hráče
+
+## Přednáška 11, Rozděl a panuj
 
 ### Rozděl a panuj
 
@@ -2120,27 +2401,6 @@ def quicksort(s):
   stred = [ a for a in s if a == x ]
   return quicksort(vlevo) + stred + quicksort(vpravo)
 ```
-## Přednáška 11, Minimax
-
-### Algoritmus minimax 
-
-Algoritmus
-- hodnota uzlu, kde je na tahu bílý = maximum z hodnot jeho synů
-- hodnota uzlu kde je na tahu černý = minimum z honot jeho synů
-- strom hry se ohodnocuje od listů zdola nahoru po vrstvách a očítají se střídavě maxima a minima
-
-Programová realiazce
-- prohledáváme do hloubky DFS
-- používáme minimax agoritmus, na hladinách se hodnoty počítají střídavě jako minimum a maximum ze synů
-
-#### zrychlení, ořezání 
-
-ztrátové
-- po několika málo vrstvách provedeme ohodnocení a nejhorší pozice odmítneme
-
-alfa-beta prořezávání/bezztrátové
-- prořezávání se provádí při jednom průchodu pro oba hráče
-
 ## Přednáška 12, Dynamické programování
 
 rozklad úlohy na menší podúlohy stejného charakteru
