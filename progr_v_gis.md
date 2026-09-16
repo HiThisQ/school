@@ -86,6 +86,22 @@ značkovací jazyky
 - jednoduchá syntaxe
 
 
+## Cvičení 1
+
+```python
+print(type(n))    #vypíše datový typ objektu
+x = 10.55
+y = 11
+z = x + Y
+text = "jmeno"
+print(text + text + text)    #skladani textu
+delka_retezce = len(text)    #len pocita delku promenne
+                             #index zacina na 0, prvni odzadu je -1
+                             # [0:x] je prvních x indexů
+                             # [0:] vrátí od 0 do nejvyššího
+```
+
+
 
 
 
