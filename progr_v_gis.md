@@ -51,7 +51,7 @@ Komentáře
 
 ### Programovací jazyky
 
-- vyžadující kompilaci
+vyžadující kompilaci
   - Počítač nerozumí lidkému jazyku a umí pouze jednoduché operace
   - Programovací jazyk umožňuje implementaci kódu, které je možné compilerem přeložit do programu
   - Jazyky C, C++
@@ -59,20 +59,20 @@ Komentáře
   - Kompilace závislá na platformě
   - Výhoda je rychlost běhu programu, protože se spouští již strojový kód 
 
-- skriptovací jazyky
+skriptovací jazyky
   - pro spuštění zdrojového kódu je potřeba interpret, který překládá do strojového kódu po řádku
   - webovky, v již vytvořených softwarech
   - přenositelnost zdrojových kódů mezi platformami
   - pomalejší než jazyky s kompilací a obtížnější hledání chyb
   -  Python, JavaScript, PHP, Pearl
 
-- virtuální zdroj
+virtuální zdroj
   - kombinace obou předchozích
   - spojení výhod skriptovacích i kompilačních programů
   - zdrojový kód nejdřív přeložen do mezikódu CIL
   - Java, C#
 
-- značkovací jazyky
+značkovací jazyky
   - neslouží k tvorbě programu primárně na strukturu, ukládání dat nebo prezentaci
   - nepřevádí algoritmus do programu
   - HTML, XML
